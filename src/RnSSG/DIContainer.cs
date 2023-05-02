@@ -28,6 +28,8 @@ static class DIContainer
       .AddSingleton<IConsoleUtils, ConsoleUtils>()
       .AddSingleton<IJsonHelper, JsonHelper>()
       .AddSingleton<IFileAbstraction, FileAbstraction>()
+      .AddSingleton<IDirectoryAbstraction, DirectoryAbstraction>()
+      .AddSingleton<IPathAbstraction, PathAbstraction>()
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
     ServiceProvider = serviceCollection.BuildServiceProvider();

@@ -8,6 +8,7 @@ interface IConsoleUtils
   IConsoleUtils InsertBlankLine();
   IConsoleUtils DrawTitle(string title);
   IConsoleUtils WriteLine(string line);
+  IConsoleUtils WriteError(string message);
   bool Confirm(string message);
 }
 
@@ -37,6 +38,15 @@ class ConsoleUtils : IConsoleUtils
   public IConsoleUtils WriteLine(string line)
   {
     Console.WriteLine(line);
+    return this;
+  }
+
+  public IConsoleUtils WriteError(string message)
+  {
+    Console.WriteLine();
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine($"[!] {message}");
+    Console.ResetColor();
     return this;
   }
 

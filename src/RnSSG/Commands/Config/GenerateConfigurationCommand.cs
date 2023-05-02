@@ -16,16 +16,19 @@ class GenerateConfigurationCommand
   private readonly IConsoleUtils _consoleUtils;
   private readonly IJsonHelper _jsonHelper;
   private readonly IFileAbstraction _file;
+  private readonly IPathAbstraction _path;
 
   public GenerateConfigurationCommand(ILoggerAdapter<GenerateConfigurationCommand> logger,
     IConsoleUtils consoleUtils,
     IJsonHelper jsonHelper,
-    IFileAbstraction file)
+    IFileAbstraction file,
+    IPathAbstraction path)
   {
     _logger = logger;
     _consoleUtils = consoleUtils;
     _jsonHelper = jsonHelper;
     _file = file;
+    _path = path;
   }
 
   public async Task<int> OnExecuteAsync(CommandLineApplication _)
@@ -43,7 +46,7 @@ class GenerateConfigurationCommand
 
     _consoleUtils.InsertBlankLine();
 
-    var configFilePath = Path.Combine(targetDir, RnSsgConstants.ConfigFileName);
+    var configFilePath = _path.Combine(targetDir, RnSsgConstants.ConfigFileName);
     if (_file.Exists(configFilePath))
     {
       if (!_consoleUtils.Confirm($"Configuration file '{configFilePath}' already exists, overwrite it?"))
