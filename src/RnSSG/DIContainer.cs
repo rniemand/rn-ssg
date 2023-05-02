@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using RnCore.Abstractions;
 using RnCore.Logging;
 using RnSSG.Utils;
 
@@ -25,6 +26,8 @@ static class DIContainer
         loggingBuilder.AddNLog("nlog.config");
       })
       .AddSingleton<IConsoleUtils, ConsoleUtils>()
+      .AddSingleton<IJsonHelper, JsonHelper>()
+      .AddSingleton<IFileAbstraction, FileAbstraction>()
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
     ServiceProvider = serviceCollection.BuildServiceProvider();

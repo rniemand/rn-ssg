@@ -2,7 +2,7 @@
   "profiles": {
     "RnSSG": {
       "commandName": "Project",
-      "commandLineArgs": "config generate"
+      "commandLineArgs": "config generate \"C:\\Dev\\_ssg\""
     }
   }
 }

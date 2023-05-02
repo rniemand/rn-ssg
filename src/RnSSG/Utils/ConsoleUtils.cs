@@ -51,8 +51,17 @@ class ConsoleUtils : IConsoleUtils
       Console.Write("> Y/N : ");
       var input = Console.ReadKey();
       var value = input.KeyChar.ToString().ToLower();
-      if (value == "y") return true;
-      if (value == "n") return false;
+      if (value == "y")
+      {
+        Console.WriteLine();
+        return true;
+      }
+
+      if (value == "n")
+      {
+        Console.WriteLine();
+        return false;
+      }
       Console.WriteLine();
       Console.ForegroundColor = ConsoleColor.Red;
       Console.WriteLine("[!] Invalid input, please enter 'Y' for YES or 'N' for NO.");

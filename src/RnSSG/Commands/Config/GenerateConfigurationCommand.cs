@@ -1,5 +1,7 @@
 using McMaster.Extensions.CommandLineUtils;
+using RnCore.Abstractions;
 using RnCore.Logging;
+using RnSSG.Models;
 using RnSSG.Utils;
 
 namespace RnSSG.Commands;
@@ -7,19 +9,26 @@ namespace RnSSG.Commands;
 [Command("generate", "g", Description = "Generates initial configuration used by this tool.")]
 class GenerateConfigurationCommand
 {
-  [Option("--source-dir | -s", CommandOptionType.SingleOrNoValue, Description = "Source directory containing your markdown files")]
+  [Argument(0, "Root directory")]
   public string SourceDir { get; set; } = string.Empty;
 
   private readonly ILoggerAdapter<GenerateConfigurationCommand> _logger;
   private readonly IConsoleUtils _consoleUtils;
+  private readonly IJsonHelper _jsonHelper;
+  private readonly IFileAbstraction _file;
 
-  public GenerateConfigurationCommand(ILoggerAdapter<GenerateConfigurationCommand> logger, IConsoleUtils consoleUtils)
+  public GenerateConfigurationCommand(ILoggerAdapter<GenerateConfigurationCommand> logger,
+    IConsoleUtils consoleUtils,
+    IJsonHelper jsonHelper,
+    IFileAbstraction file)
   {
     _logger = logger;
     _consoleUtils = consoleUtils;
+    _jsonHelper = jsonHelper;
+    _file = file;
   }
 
-  public async Task<int> OnExecuteAsync(CommandLineApplication cla)
+  public async Task<int> OnExecuteAsync(CommandLineApplication _)
   {
     var targetDir = GetTargetDirectory();
 
@@ -32,20 +41,37 @@ class GenerateConfigurationCommand
     if (!_consoleUtils.Confirm($"Generate configuration in: {targetDir}"))
       return 0;
 
+    _consoleUtils.InsertBlankLine();
+
+    var configFilePath = Path.Combine(targetDir, RnSsgConstants.ConfigFileName);
+    if (_file.Exists(configFilePath))
+    {
+      if (!_consoleUtils.Confirm($"Configuration file '{configFilePath}' already exists, overwrite it?"))
+        return 0;
+
+      _file.Delete(configFilePath);
+      _consoleUtils.WriteLine("Removed old configuration file.").InsertBlankLine();
+    }
+
+    var config = new RnSsgConfig();
+    var configJson = _jsonHelper.SerializeObject(config, true);
+    await _file.WriteAllTextAsync(configFilePath, configJson);
+
+    _consoleUtils
+      .InsertBlankLine()
+      .WriteLine($"Created configuration file: {configFilePath}");
 
     return 0;
   }
 
   private string GetTargetDirectory()
   {
-    if (!string.IsNullOrWhiteSpace(SourceDir))
-    {
-      if (!Directory.Exists(SourceDir))
-        throw new Exception($"Unable to locate requested root directory: {SourceDir}");
+    if (string.IsNullOrWhiteSpace(SourceDir))
+      return Environment.CurrentDirectory;
 
-      return SourceDir;
-    }
+    if (!Directory.Exists(SourceDir))
+      throw new Exception($"Unable to locate requested root directory: {SourceDir}");
 
-    return Environment.CurrentDirectory;
+    return SourceDir;
   }
 }
