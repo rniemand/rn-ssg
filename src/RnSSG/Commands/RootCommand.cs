@@ -9,7 +9,8 @@ namespace RnSSG.Commands;
 
 [Command(Description = "Generates static HTML site from markdown files.")]
 [Subcommand(
-  typeof(GenerateSiteCommand)
+  typeof(SiteRootCommand),
+  typeof(ConfigRootCommand)
 )]
 class RootCommand
 {
