@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using RnCore.Logging;
+using RnSSG.Utils;
 
 namespace RnSSG;
 
@@ -23,6 +24,7 @@ static class DIContainer
         loggingBuilder.SetMinimumLevel(LogLevel.Trace);
         loggingBuilder.AddNLog("nlog.config");
       })
+      .AddSingleton<IConsoleUtils, ConsoleUtils>()
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
     ServiceProvider = serviceCollection.BuildServiceProvider();
