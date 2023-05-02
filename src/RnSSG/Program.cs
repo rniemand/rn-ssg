@@ -1,10 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
-using RnCore.Logging;
-using RnSSG;
+using RnSSG.Commands;
+using System.Reflection;
 
-var logger = DIContainer.ServiceProvider.GetRequiredService<ILoggerAdapter<Program>>();
+var assembly = Assembly.GetExecutingAssembly();
 
-Console.WriteLine("Hello world");
-
-logger.LogInformation("Hello world!");
-
+return await RootCommand.RunCommandLineAsync(assembly, args);

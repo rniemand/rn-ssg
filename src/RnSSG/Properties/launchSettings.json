@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RnSSG": {
+      "commandName": "Project",
+      "commandLineArgs": "g"
+    }
+  }
+}
