@@ -26,5 +26,10 @@ dotnet tool uninstall --global RnSSG
 
 ```bash
 cd docker
-docker-compose up
+docker-compose up -d
+cd ..
+cd .\templates\default\
+npm run watch
 ```
+
+- Open [http://localhost:8080/](http://localhost:8080/) to view the running application.
