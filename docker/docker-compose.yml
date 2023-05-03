@@ -1,0 +1,10 @@
+version: '3.6'
+
+services:
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./../templates/default:/usr/share/nginx/html
+    ports:
+      - 8080:80

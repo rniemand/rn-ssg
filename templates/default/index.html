@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{siteName}}</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+
+    <div id="content"></div>
+
+    <script>
+        const converter = new showdown.Converter();
+        var text = `# Hello World\r\nThis is a test`;
+        document.getElementById('content').innerHTML = converter.makeHtml(text);
+
+        function getPosts() {
+            return new Promise((resolve, reject) => {
+                fetch("/posts.json").then(response => {
+                    if (response.status === 404) { reject(response); }
+                    else { response.json().then(resolve, reject); }
+                }, reject);
+            });
+        };
+
+        function renderPost(post) {
+            fetch(post.file).then(response => {
+                response.text().then(markdown => {
+                    document.getElementById('content').innerHTML = converter.makeHtml(markdown);
+                }, error => {
+                    //todo: complete this
+                    console.error(error);
+                });
+            }, error => {
+                // todo: complete this
+                console.error(error);
+            });
+        }
+
+        getPosts().then(data => {
+            renderPost(data.posts[0]);
+        }, error => {
+            console.log('whoops', error);
+        });
+    </script>
+</body>
+
+</html>

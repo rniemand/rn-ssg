@@ -93,6 +93,7 @@ class InitSiteCommand
   private static void PopulateDirectories(ISiteFileHelper helper) => helper
     .AddDirectory("site", "{root}", "site")
     .AddDirectory("posts", "{site}", "_posts")
+    .AddDirectory("templates", "{site}", "_templates")
     .AddDirectory("pages", "{site}", "_tabs")
     .AddDirectory("assets", "{site}", "assets")
     .AddDirectory("css", "{assets}", "css")

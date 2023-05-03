@@ -15,3 +15,5 @@ dotnet tool uninstall --global RnSSG
 - https://github.com/rniemand/RnCore.Logging (Documentation)[http://www.richardn.ca/RnCore.Logging/#/]
 - https://github.com/NLog/NLog.Extensions.Logging
 - https://www.newtonsoft.com/json
+- https://github.com/showdownjs/showdown
+- 
