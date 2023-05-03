@@ -1,53 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{{siteName}}</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-solarizedlight.css"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"
+    />
 
     <style>
-        body {
-            font-size: 14px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-        }
+      body {
+        font-size: 14px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      }
 
-        pre {
-            border: 2px solid #099;
-            padding: 3px;
-            border-radius: 6px;
-            background-color: #333;
-        }
+      pre {
+        border: 2px solid #099;
+        padding: 3px;
+        border-radius: 6px;
+        background-color: #333;
+      }
 
-        #content {
-            font-size: 1.2em;
-        }
+      #content {
+        font-size: 1.2em;
+      }
 
-        #content img {
-            border: 1px solid #000;
-            border-radius: 4px;
-            filter: drop-shadow(6px 4px 8px #000);
-        }
+      #content img {
+        border: 1px solid #000;
+        border-radius: 4px;
+        filter: drop-shadow(6px 4px 8px #000);
+      }
 
-        #tags {
-            padding: 2px;
-            margin: 2px;
-        }
+      #tags {
+        padding: 2px;
+        margin: 2px;
+      }
 
-        #tags span {
-            margin: 2px 5px 2px 2px;
-            border: 1px dotted #000;
-            padding: 2px 4px 2px 4px;
-            border-radius: 3px;
-            font-size: 1.1em;
-            background-color: #ececec;
-        }
+      #tags span {
+        margin: 2px 5px 2px 2px;
+        border: 1px dotted #000;
+        padding: 2px 4px 2px 4px;
+        border-radius: 3px;
+        font-size: 1.1em;
+        background-color: #ececec;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-ini.min.js"></script>
@@ -59,139 +70,186 @@
     <div id="date"></div>
     <div id="tags"></div>
     <div id="toc"></div>
+    <div id="react"></div>
     <div id="content"></div>
 
     <script>
-        Prism.manual = true;
+      Prism.manual = true;
 
-        const converter = new showdown.Converter();
-        converter.setOption('omitExtraWLInCodeBlocks', true);
-        converter.setOption('parseImgDimensions', true);
-        converter.setOption('simplifiedAutoLink', true);
-        converter.setOption('tables', true);
-        converter.setOption('openLinksInNewWindow', true);
-        converter.setOption('emoji', true);
-        converter.setOption('metadata', true);
+      const converter = new showdown.Converter();
+      converter.setOption("omitExtraWLInCodeBlocks", true);
+      converter.setOption("parseImgDimensions", true);
+      converter.setOption("simplifiedAutoLink", true);
+      converter.setOption("tables", true);
+      converter.setOption("openLinksInNewWindow", true);
+      converter.setOption("emoji", true);
+      converter.setOption("metadata", true);
 
-        var text = `# Hello World\r\nThis is a test`;
-        document.getElementById('content').innerHTML = converter.makeHtml(text);
+      var text = `# Hello World\r\nThis is a test`;
+      document.getElementById("content").innerHTML = converter.makeHtml(text);
 
-        var defaultOptions = showdown.getDefaultOptions();
+      var defaultOptions = showdown.getDefaultOptions();
 
-        function getPosts() {
-            return new Promise((resolve, reject) => {
-                fetch("/posts.json").then(response => {
-                    if (response.status === 404) { reject(response); }
-                    else { response.json().then(resolve, reject); }
-                }, reject);
-            });
-        };
-
-        function getPrismLanguage(shorthand) {
-            switch (shorthand.toLowerCase().trim()) {
-                case 'js': return Prism.languages.javascript;
-                case 'ini': return Prism.languages.ini;
-                case 'bash': return Prism.languages.bash;
-                case 'shell': return Prism.languages.shellsession;
-                default: throw new Error(`unsupported language: ${shorthand}`);
+      function getPosts() {
+        return new Promise((resolve, reject) => {
+          fetch("/posts.json").then((response) => {
+            if (response.status === 404) {
+              reject(response);
+            } else {
+              response.json().then(resolve, reject);
             }
-        }
-
-        function processCodeBlock(node) {
-            const languages = node.classList.value.split(' ').filter(x => x.indexOf('language-') > -1);
-            if (languages.length === 0) return;
-            const shorthand = languages[0].split('-')[1];
-            const prismLanguage = getPrismLanguage(shorthand);
-            node.innerHTML = Prism.highlight(node.innerHTML, prismLanguage, shorthand);
-        }
-
-        function renderToc(toc) {
-            let tocHtml = '';
-            let currentLevel = 0;
-            for (const entry of toc) {
-                if (currentLevel != entry.level) {
-                    if (currentLevel > entry.level) tocHtml += '</ul>';
-                    currentLevel = entry.level;
-                    tocHtml += '<ul>';
-                }
-                tocHtml += `<li><a href="#${entry.slug}">${entry.title}</a></li>`;
-            }
-
-            tocHtml += '</ul>';
-
-            document.getElementById('toc').innerHTML = tocHtml;
-        }
-
-        function renderTags(metadata) {
-            const rawTags = (metadata.tags || '');
-            let tags = [];
-
-            if (rawTags.length > 0) {
-                tags = rawTags.substr(1).substr(0, rawTags.length - 2).split(',');
-            }
-
-            let tagsHtml = '';
-            for (const tag of tags) {
-                tagsHtml += `<span class="tag">${tag}</span>`;
-            }
-
-            document.getElementById('tags').innerHTML = tagsHtml;
-        }
-
-        function renderPost(post) {
-            fetch(post.file).then(response => {
-                response.text().then(markdown => {
-                    const generatedHtml = converter.makeHtml(markdown);
-                    const metadata = converter.getMetadata();
-
-                    document.getElementById('content').innerHTML = generatedHtml;
-                    document.getElementById('title').innerHTML = metadata.title;
-                    document.getElementById('date').innerHTML = metadata.date;
-                    renderTags(metadata);
-                    console.log(metadata);
-
-                    const toc = [];
-                    const knownSlugs = [];
-                    const titles = markdown.split('\n').filter(x => x.indexOf('#') === 0);
-
-                    for (const title of titles) {
-                        const cleanTitle = title.replace(/#{1,}/, '').trim();
-                        let slug = cleanTitle.toLowerCase().replace(/[^\w]/gi, '');
-                        if (knownSlugs.indexOf(slug) > -1) {
-                            slug = slug + '-' + knownSlugs.filter(x => x.indexOf(slug) === 0).length;
-                        }
-                        knownSlugs.push(slug);
-
-                        toc.push({
-                            title: cleanTitle,
-                            level: title.split(' ')[0].length,
-                            slug: slug
-                        });
-                    }
-
-                    renderToc(toc);
-
-                    for (const cb of document.querySelectorAll('#content pre code')) {
-                        processCodeBlock(cb);
-                    }
-                }, error => {
-                    //todo: complete this
-                    console.error(error);
-                });
-            }, error => {
-                // todo: complete this
-                console.error(error);
-            });
-        }
-
-        getPosts().then(data => {
-            renderPost(data.posts[0]);
-        }, error => {
-            console.log('whoops', error);
+          }, reject);
         });
+      }
+
+      function getPrismLanguage(shorthand) {
+        switch (shorthand.toLowerCase().trim()) {
+          case "js":
+            return Prism.languages.javascript;
+          case "ini":
+            return Prism.languages.ini;
+          case "bash":
+            return Prism.languages.bash;
+          case "shell":
+            return Prism.languages.shellsession;
+          default:
+            throw new Error(`unsupported language: ${shorthand}`);
+        }
+      }
+
+      function processCodeBlock(node) {
+        const languages = node.classList.value
+          .split(" ")
+          .filter((x) => x.indexOf("language-") > -1);
+        if (languages.length === 0) return;
+        const shorthand = languages[0].split("-")[1];
+        const prismLanguage = getPrismLanguage(shorthand);
+        node.innerHTML = Prism.highlight(
+          node.innerHTML,
+          prismLanguage,
+          shorthand
+        );
+      }
+
+      function renderToc(toc) {
+        let tocHtml = "";
+        let currentLevel = 0;
+        for (const entry of toc) {
+          if (currentLevel != entry.level) {
+            if (currentLevel > entry.level) tocHtml += "</ul>";
+            currentLevel = entry.level;
+            tocHtml += "<ul>";
+          }
+          tocHtml += `<li><a href="#${entry.slug}">${entry.title}</a></li>`;
+        }
+
+        tocHtml += "</ul>";
+
+        document.getElementById("toc").innerHTML = tocHtml;
+      }
+
+      function renderTags(metadata) {
+        const rawTags = metadata.tags || "";
+        let tags = [];
+
+        if (rawTags.length > 0) {
+          tags = rawTags
+            .substr(1)
+            .substr(0, rawTags.length - 2)
+            .split(",");
+        }
+
+        let tagsHtml = "";
+        for (const tag of tags) {
+          tagsHtml += `<span class="tag">${tag}</span>`;
+        }
+
+        document.getElementById("tags").innerHTML = tagsHtml;
+      }
+
+      function renderPost(post) {
+        fetch(post.file).then(
+          (response) => {
+            response.text().then(
+              (markdown) => {
+                const generatedHtml = converter.makeHtml(markdown);
+                const metadata = converter.getMetadata();
+
+                document.getElementById("content").innerHTML = generatedHtml;
+                document.getElementById("title").innerHTML = metadata.title;
+                document.getElementById("date").innerHTML = metadata.date;
+                renderTags(metadata);
+                console.log(metadata);
+
+                const toc = [];
+                const knownSlugs = [];
+                const titles = markdown
+                  .split("\n")
+                  .filter((x) => x.indexOf("#") === 0);
+
+                for (const title of titles) {
+                  const cleanTitle = title.replace(/#{1,}/, "").trim();
+                  let slug = cleanTitle.toLowerCase().replace(/[^\w]/gi, "");
+                  if (knownSlugs.indexOf(slug) > -1) {
+                    slug =
+                      slug +
+                      "-" +
+                      knownSlugs.filter((x) => x.indexOf(slug) === 0).length;
+                  }
+                  knownSlugs.push(slug);
+
+                  toc.push({
+                    title: cleanTitle,
+                    level: title.split(" ")[0].length,
+                    slug: slug,
+                  });
+                }
+
+                renderToc(toc);
+
+                for (const cb of document.querySelectorAll(
+                  "#content pre code"
+                )) {
+                  processCodeBlock(cb);
+                }
+              },
+              (error) => {
+                //todo: complete this
+                console.error(error);
+              }
+            );
+          },
+          (error) => {
+            // todo: complete this
+            console.error(error);
+          }
+        );
+      }
+
+      getPosts().then(
+        (data) => {
+          renderPost(data.posts[0]);
+        },
+        (error) => {
+          console.log("whoops", error);
+        }
+      );
+
+      const rel = React.createElement.bind(React);
+
+      class TestComponent extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        render() {
+          return rel("div", {}, "Hello World!");
+        }
+      }
+
+      const domContainer = document.querySelector("#react");
+      const root = ReactDOM.createRoot(domContainer);
+      root.render(rel(TestComponent, {}));
     </script>
-
-
-</body>
-
+  </body>
 </html>

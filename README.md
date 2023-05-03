@@ -22,3 +22,9 @@ dotnet tool uninstall --global RnSSG
 - https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/
 - 
 
+## Development
+
+```bash
+cd docker
+docker-compose up
+```
