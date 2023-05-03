@@ -1,0 +1,28 @@
+{
+  "name": "rn-ssg-template-default",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "gulp watch"
+  },
+  "author": "Richard Niemand",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-copy": "^4.0.1",
+    "gulp-inline-source": "^4.0.0",
+    "gulp-less": "^5.0.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-sourcemaps": "^3.0.0",
+    "npm-watch": "^0.11.0"
+  },
+  "dependencies": {
+    "babel-plugin-transform-react-jsx": "^6.24.1"
+  }
+}

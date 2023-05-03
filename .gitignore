@@ -33,3 +33,9 @@ Obj/
 *.ncrunchsolution
 *.crunchsolution\.*
 *.executiontimes\.*
+
+# Node
+node_modules/
+
+# Templates
+dist/
