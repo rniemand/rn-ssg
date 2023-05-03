@@ -16,4 +16,9 @@ dotnet tool uninstall --global RnSSG
 - https://github.com/NLog/NLog.Extensions.Logging
 - https://www.newtonsoft.com/json
 - https://github.com/showdownjs/showdown
+- https://prismjs.com/
+- https://www.jsdelivr.com/
+- https://cdn.jsdelivr.net/npm/prismjs@1/components/
+- https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/
 - 
+
