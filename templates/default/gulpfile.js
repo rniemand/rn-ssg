@@ -24,6 +24,7 @@ function generateJs() {
     "./src/app.config.js",
     "./src/scripts/**/*.js",
     "./src/scripts/**/*.jsx",
+    "./src/app.bootstrap.js",
   ])
     .pipe(concat("ui.js"))
     .pipe(
