@@ -6,11 +6,15 @@
 
 		render() {
       const postHelper = this.props.postHelper;
-      if(!postHelper.currentPost) return null;
+      const postHtml = postHelper.currentPostHtml;
+      if(!postHtml) return null;
 
       //console.log('postHelper', postHelper.currentPost)
 
-      return (<div dangerouslySetInnerHTML={{ __html: postHelper.currentPost }}></div>);
+      return (<div className="post">
+        <app.components.PostHeader post={this.props.selectedPost} />
+        <div dangerouslySetInnerHTML={{ __html: postHtml }}></div>
+      </div>);
 		}
 	}
 

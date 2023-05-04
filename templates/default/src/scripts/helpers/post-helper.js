@@ -8,7 +8,8 @@
       this.postsIndexUrl = '/_rnssg/posts.json';
       this.postsIndex = [];
       this.allPosts = [];
-      this.currentPost = null;
+      this.currentPostHtml = null;
+      this.selectedPost = null;
     }
 
     loadPostsIndex = () => {
@@ -46,6 +47,7 @@
 
     loadSelectedPost = (post) => {
       this.loadingPost = true;
+      this.selectedPost = post;
       app.instance.render();
 
       fetch(post.path).then(
@@ -54,7 +56,7 @@
             (markdown) => {
               const generatedHtml = converter.makeHtml(markdown);
               const metadata = converter.getMetadata();
-              
+
               //document.getElementById("content").innerHTML = generatedHtml;
               //document.getElementById("title").innerHTML = metadata.title;
               // document.getElementById("date").innerHTML = metadata.date;
@@ -94,7 +96,7 @@
 
 
               this.loadingPost = false;
-              this.currentPost = generatedHtml;
+              this.currentPostHtml = generatedHtml;
               app.instance.render();
             },
             (error) => {
