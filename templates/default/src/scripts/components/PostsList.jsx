@@ -23,7 +23,7 @@
 			return (<div>
 				{postHelper.allPosts.slice(0, 10).map(entry => {
 					return (<app.components.PostListEntry
-						key={entry._id}
+						key={entry.id}
 						entry={entry}
 						onViewPostClick={onViewPostClickHandler}
 					/>);

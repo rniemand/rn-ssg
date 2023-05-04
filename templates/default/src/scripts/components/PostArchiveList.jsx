@@ -27,7 +27,7 @@
                   {year}-{month} ({postHelper.postsIndex[year][month].length} posts)
                   <ul className={classes}>
                     {postHelper.postsIndex[year][month].map(postInfo => {
-                      return(<li key={postInfo._id} onClick={() => this.props.onPostSelected(postInfo)}>
+                      return(<li key={postInfo.id} onClick={() => this.props.onPostSelected(postInfo)}>
                         {postInfo.title}
                       </li>);
                     })}

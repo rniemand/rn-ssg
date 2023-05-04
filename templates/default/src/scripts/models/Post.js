@@ -10,6 +10,7 @@
       this.description = postJson.description;
       this.tags = postJson.tags;
       this.author = postJson.author;
+      this.id = postJson.id;
     }
   }
 

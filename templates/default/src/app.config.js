@@ -29,6 +29,8 @@ window.RnSSG = window.RnSSG || {};
 
   app.config = {
     generated: createGeneratedConfig(),
+    postUrlTemplate: '/post/{id}/{year}/{month}/{title}',
+    postUrlRegex: new RegExp('\\/post\\/(\\d{1,})\\/\\d{4}\\/'),
     logging: {
       enabled: true,
       logFetch: true,
