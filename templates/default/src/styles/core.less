@@ -36,7 +36,7 @@ pre {
 }
 
 
-.core-app {
+.rnssg {
   table.main {
     width: 100%;
     border: 1px solid #000;
@@ -49,6 +49,52 @@ pre {
 
         vertical-align: top;
         border: 1px solid red;
+      }
+    }
+  }
+
+  ul.post-archive {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      background-color: #ececec;
+      margin-bottom: 2px;
+      padding: 2px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 6px;
+      margin: 6px;
+      display: none;
+
+      li {
+        background-color: #ecf0e3;
+        margin-bottom: 2px;
+        padding: 2px;
+      }
+
+      &.active {
+        display: block;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 12px;
+        margin: 12px;
+        display: none;
+
+        li {
+          background-color: #e0f7d1;
+          margin-bottom: 2px;
+          padding: 2px;
+        }
+
+        &.active {
+          display: block;
+        }
       }
     }
   }

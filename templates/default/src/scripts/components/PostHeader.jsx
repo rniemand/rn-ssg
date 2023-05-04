@@ -7,10 +7,8 @@
 		render() {
 			const post = this.props.post;
       
-      console.log(post)
-
-			return (<div>
-				more to come
+			return (<div className="header">
+				<h1>{post.title}</h1>
 			</div>);
 		}
 	}
