@@ -15,6 +15,7 @@ window.RnSSG = window.RnSSG || {};
   app.helpers = {};
   app.components = {};
   app.enums = {};
+  app.models = {};
 
   app.enums.LogSeverity = {
     Trace: 0,
