@@ -45,24 +45,18 @@
     };
 
     loadSelectedPost = (post) => {
-      console.log('loadSelectedPost', post);
       this.loadingPost = true;
       app.instance.render();
-
-      console.log(app)
 
       fetch(post.path).then(
         (response) => {
           response.text().then(
             (markdown) => {
-
-              //console.log(markdown);
-
-              // const generatedHtml = converter.makeHtml(markdown);
-              // const metadata = converter.getMetadata();
-
-              // document.getElementById("content").innerHTML = generatedHtml;
-              // document.getElementById("title").innerHTML = metadata.title;
+              const generatedHtml = converter.makeHtml(markdown);
+              const metadata = converter.getMetadata();
+              
+              //document.getElementById("content").innerHTML = generatedHtml;
+              //document.getElementById("title").innerHTML = metadata.title;
               // document.getElementById("date").innerHTML = metadata.date;
               // renderTags(metadata);
 
@@ -97,6 +91,11 @@
               // )) {
               //   processCodeBlock(cb);
               // }
+
+
+              this.loadingPost = false;
+              this.currentPost = generatedHtml;
+              app.instance.render();
             },
             (error) => {
               //todo: complete this

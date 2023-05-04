@@ -42,11 +42,6 @@
                   <div>POST Content here</div>
                   <app.components.PostsList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
                   <app.components.CurrentPost postHelper={postHelper} />
-                  <h1 id="title"></h1>
-                  <div id="date"></div>
-                  <div id="tags"></div>
-                  <div id="toc"></div>
-                  <div id="content"></div>
                 </td>
               </tr>
             </tbody>

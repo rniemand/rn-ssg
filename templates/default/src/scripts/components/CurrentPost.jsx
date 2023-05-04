@@ -8,11 +8,9 @@
       const postHelper = this.props.postHelper;
       if(!postHelper.currentPost) return null;
 
-      console.log('postHelper', postHelper.currentPost)
+      //console.log('postHelper', postHelper.currentPost)
 
-      return (<div>
-        <p>more to come</p>
-      </div>);
+      return (<div dangerouslySetInnerHTML={{ __html: postHelper.currentPost }}></div>);
 		}
 	}
 
