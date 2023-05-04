@@ -16,9 +16,7 @@
 				<div className="post-info">
 					<div className="posted">Posted: {dateFormatted}</div>
 					<div className="author">Author: {post.author}</div>
-					<div className="tags">
-						<app.components.PostTagList tags={metadata.tags || ''} />
-					</div>
+					<app.components.PostTagList tags={metadata.tags || ''} />
 				</div>
 			</div>);
 		}

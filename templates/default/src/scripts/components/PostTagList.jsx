@@ -12,6 +12,7 @@
       if(arrTags.length === 0) return null;
 
 			return (<div className="tag-list">
+				Tags: 
 				{arrTags.map(tag => {
           return(<span key={tag} className="tag">
             {tag}
