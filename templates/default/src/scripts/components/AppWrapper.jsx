@@ -10,6 +10,7 @@
       return (
         <div className="core-app">
           <p>This is a placeholder FOR the application!</p>
+          <p>post index loaded: <strong>{postHelper.postIndexLoaded ? 'yes' : 'no'}</strong></p>
         </div>
       );
 		}

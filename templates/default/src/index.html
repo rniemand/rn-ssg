@@ -82,9 +82,6 @@
         const shorthand = languages[0].split("-")[1];
         const prismLanguage = getPrismLanguage(shorthand);
 
-        console.log(node)
-        //console.log('xxx', unescape(node.innerHTML));
-
         node.innerHTML = Prism.highlight(
           node.innerHTML,
           prismLanguage,
@@ -155,7 +152,6 @@
                 document.getElementById("title").innerHTML = metadata.title;
                 document.getElementById("date").innerHTML = metadata.date;
                 renderTags(metadata);
-                console.log(metadata);
 
                 const toc = [];
                 const knownSlugs = [];
