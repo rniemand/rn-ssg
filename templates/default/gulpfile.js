@@ -22,6 +22,7 @@ const watchPaths = [
 function generateJs() {
   return src([
     "./src/app.config.js",
+    "./src/app.core.js",
     "./src/scripts/**/*.js",
     "./src/scripts/**/*.jsx",
     "./src/app.bootstrap.js",

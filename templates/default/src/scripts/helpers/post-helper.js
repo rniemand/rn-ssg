@@ -1,17 +1,22 @@
 ((app) => {
+  const logger = app.logger;
+
   class PostHelper {
     constructor(){
       this.postIndexLoaded = false;
+      this.postsIndexUrl = '/_rnssg/posts.json';
     }
 
     loadPostsIndex = () => {
       return new Promise((resolve, reject) => {
-        fetch("/_rnssg/posts.json").then((response) => {
+        logger.logFetch(this.postsIndexUrl);
+        fetch(this.postsIndexUrl).then((response) => {
           if (response.status === 404) {
             reject(response);
-          } else {
-            response.json().then(resolve, reject);
+            return;
           }
+
+          response.json().then(resolve, reject);
         }, reject);
       });
     };
