@@ -10,7 +10,7 @@
       let expandedYear = false;
       let expandMonth = false;
 
-			return (<ul className="post-archive">
+			return (<ul className="post-archive-x">
         {Object.keys(postsIndex).map(year => {
           const postsCount = Object.keys(postsIndex[year]).reduce((pv, cv) => { return pv += postsIndex[year][cv].length; }, 0);
           let classes = '';

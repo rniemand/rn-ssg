@@ -10,6 +10,7 @@
       this.allPosts = [];
       this.currentPostHtml = null;
       this.selectedPost = null;
+      this.postMetadata = null;
     }
 
     loadPostsIndex = () => {
@@ -48,6 +49,7 @@
     clearSelectedPost = () => {
       this.currentPostHtml = null;
       this.selectedPost = null;
+      this.postMetadata = null;
       this.loadingPost = false;
       app.instance.render();
     };
@@ -63,11 +65,6 @@
             (markdown) => {
               const generatedHtml = converter.makeHtml(markdown);
               const metadata = converter.getMetadata();
-
-              //document.getElementById("content").innerHTML = generatedHtml;
-              //document.getElementById("title").innerHTML = metadata.title;
-              // document.getElementById("date").innerHTML = metadata.date;
-              // renderTags(metadata);
 
               // const toc = [];
               // const knownSlugs = [];
@@ -104,6 +101,7 @@
 
               this.loadingPost = false;
               this.currentPostHtml = generatedHtml;
+              this.postMetadata = metadata;
               app.instance.render();
             },
             (error) => {

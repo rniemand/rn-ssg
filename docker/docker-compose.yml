@@ -6,8 +6,8 @@ services:
     restart: always
     volumes:
       - ./../templates/default/dist:/usr/share/nginx/html
-      - D:\Dev\rniemand.github.io\_posts:/usr/share/nginx/html/_posts
-      - D:\Dev\rniemand.github.io\assets:/usr/share/nginx/html/assets
+      - C:\Dev\personal\rniemand.github.io\_posts:/usr/share/nginx/html/_posts
+      - C:\Dev\personal\rniemand.github.io\assets:/usr/share/nginx/html/assets
       - ./../templates/_rnssg:/usr/share/nginx/html/_rnssg
     ports:
       - 8080:80

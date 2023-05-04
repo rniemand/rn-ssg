@@ -11,7 +11,7 @@
 
       return (<div className="post">
         <button onClick={postHelper.clearSelectedPost}>Post list</button>
-        <app.components.PostHeader post={postHelper.selectedPost} />
+        <app.components.PostHeader post={postHelper.selectedPost} metadata={postHelper.postMetadata} />
         <div dangerouslySetInnerHTML={{ __html: postHtml }}></div>
       </div>);
 		}

@@ -8,7 +8,8 @@
             "tags": [
                 "hello",
                 "world"
-            ]
+            ],
+            "author": "Richard Niemand"
         },
         {
             "title": "Find the nth occurrence of a string (JavaScript)",
@@ -18,7 +19,8 @@
             "tags": [
                 "hello",
                 "world"
-            ]
+            ],
+            "author": "Richard Niemand"
         },
         {
             "title": "Voxelab Aries 3D Printer with Cura",
@@ -28,7 +30,8 @@
             "tags": [
                 "hello",
                 "world"
-            ]
+            ],
+            "author": "Richard Niemand"
         },
         {
             "title": "Remote Access Home",
@@ -38,7 +41,8 @@
             "tags": [
                 "hello",
                 "world"
-            ]
+            ],
+            "author": "Richard Niemand"
         },
         {
             "title": "Running Satisfactory Dedicated Server",
@@ -48,7 +52,41 @@
             "tags": [
                 "hello",
                 "world"
-            ]
+            ],
+            "author": "Richard Niemand"
+        },
+        {
+            "title": "Setting up ESP8266 on Arduino",
+            "path": "/_posts/2018/2018-03-19-SettingUpEsp8266OnArduino.md",
+            "date": "2018-03-19 18:00:00 -0600",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "tags": [
+                "hello",
+                "world"
+            ],
+            "author": "Richard Niemand"
+        },
+        {
+            "title": "Updating Chirpy",
+            "path": "/_posts/2022/2022-11-25-UpdatingChirpy.md",
+            "date": "2022-11-25 08:00:00 -0600",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "tags": [
+                "hello",
+                "world"
+            ],
+            "author": "Richard Niemand"
+        },
+        {
+            "title": "Docsify for your projects",
+            "path": "/_posts/2022/2022-12-22-Docsify.md",
+            "date": "2022-12-22 07:00:00 -0600",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "tags": [
+                "hello",
+                "world"
+            ],
+            "author": "Richard Niemand"
         }
     ]
 }
