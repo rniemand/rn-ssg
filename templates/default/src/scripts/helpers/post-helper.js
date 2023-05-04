@@ -4,6 +4,7 @@
   class PostHelper {
     constructor(){
       this.postIndexLoaded = false;
+      this.loadingPost = false;
       this.postsIndexUrl = '/_rnssg/posts.json';
       this.postsIndex = [];
       this.allPosts = [];
@@ -41,6 +42,73 @@
 
     renderPost = (postId) => {
       console.log('renderPost', postId)
+    };
+
+    loadSelectedPost = (post) => {
+      console.log('loadSelectedPost', post);
+      this.loadingPost = true;
+      app.instance.render();
+
+      console.log(app)
+
+      fetch(post.path).then(
+        (response) => {
+          response.text().then(
+            (markdown) => {
+
+              //console.log(markdown);
+
+              // const generatedHtml = converter.makeHtml(markdown);
+              // const metadata = converter.getMetadata();
+
+              // document.getElementById("content").innerHTML = generatedHtml;
+              // document.getElementById("title").innerHTML = metadata.title;
+              // document.getElementById("date").innerHTML = metadata.date;
+              // renderTags(metadata);
+
+              // const toc = [];
+              // const knownSlugs = [];
+              // const titles = markdown
+              //   .split("\n")
+              //   .filter((x) => x.indexOf("#") === 0);
+
+              // for (const title of titles) {
+              //   const cleanTitle = title.replace(/#{1,}/, "").trim();
+              //   let slug = cleanTitle.toLowerCase().replace(/[^\w]/gi, "");
+              //   if (knownSlugs.indexOf(slug) > -1) {
+              //     slug =
+              //       slug +
+              //       "-" +
+              //       knownSlugs.filter((x) => x.indexOf(slug) === 0).length;
+              //   }
+              //   knownSlugs.push(slug);
+
+              //   toc.push({
+              //     title: cleanTitle,
+              //     level: title.split(" ")[0].length,
+              //     slug: slug,
+              //   });
+              // }
+
+              // renderToc(toc);
+
+              // for (const cb of document.querySelectorAll(
+              //   "#content pre code"
+              // )) {
+              //   processCodeBlock(cb);
+              // }
+            },
+            (error) => {
+              //todo: complete this
+              console.error(error);
+            }
+          );
+        },
+        (error) => {
+          // todo: complete this
+          console.error(error);
+        }
+      );
     };
 
     _processPostsIndex = (json) => {

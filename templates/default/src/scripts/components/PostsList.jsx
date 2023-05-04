@@ -10,9 +10,21 @@
 				return (<div>No posts to display</div>);
 			}
 
+			if(postHelper.loadingPost) {
+				return (<div>Loading selected post</div>);
+			}
+
+			const onViewPostClickHandler = (post) => {
+				this.props.onPostSelected(post);
+			};
+
 			return (<div>
 				{postHelper.allPosts.slice(0, 10).map(entry => {
-					return (<app.components.PostListEntry key={entry._id} entry={entry} />);
+					return (<app.components.PostListEntry
+						key={entry._id}
+						entry={entry}
+						onViewPostClick={onViewPostClickHandler}
+					/>);
 				})}
 			</div>);
 		}

@@ -1,10 +1,9 @@
 ((app) => {
   const rel = React.createElement.bind(React);
+  const domContainer = document.querySelector("#react");
+  const root = ReactDOM.createRoot(domContainer);
 
-  new app.helpers.AppHelper(ctx => {
-    const domContainer = document.querySelector("#react");
-    const root = ReactDOM.createRoot(domContainer);
-
+  app.instance = new app.helpers.AppHelper(ctx => {
     root.render(rel(app.components.AppWrapper, {
       postHelper: ctx.postHelper
     }));

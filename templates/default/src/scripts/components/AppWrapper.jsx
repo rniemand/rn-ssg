@@ -7,6 +7,10 @@
 		render() {
       const postHelper = this.props.postHelper;
 
+      const onPostSelectedHandler = (post) => {
+        postHelper.loadSelectedPost(post);
+      };
+
       return (
         <div className="core-app">
           <table className="main">
@@ -36,7 +40,7 @@
                 </td>
                 <td>
                   <div>POST Content here</div>
-                  <app.components.PostsList postHelper={postHelper} />
+                  <app.components.PostsList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
                   <app.components.CurrentPost postHelper={postHelper} />
                   <h1 id="title"></h1>
                   <div id="date"></div>

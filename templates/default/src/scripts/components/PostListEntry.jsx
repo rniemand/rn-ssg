@@ -8,12 +8,11 @@
       const entry = this.props.entry;
       const dateFormatted = entry.date.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
 
-      console.log(entry)
-
       return (<div className="postlist-entry">
         <div>{entry.title}</div>
         <span>{dateFormatted}</span>
         <div>{entry.description}</div>
+        <button onClick={() => this.props.onViewPostClick(entry)}>View Post</button>
       </div>);
     }
   }

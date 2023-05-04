@@ -1,18 +1,20 @@
 ((app) => {
   class AppHelper {
-    constructor(onInitCallback) {
-      if(!onInitCallback) throw new Error('No onInitCallback passed');
-      if(typeof onInitCallback !== 'function') throw new Error('onInitCallback needs to be a function');
+    constructor(renderFn) {
+      if(!renderFn) throw new Error('No renderFn passed');
+      if(typeof renderFn !== 'function') throw new Error('renderFn needs to be a function');
 
-      this._onInit = onInitCallback;
+      this._renderFn = renderFn;
       this.postHelper = new app.helpers.PostHelper();
 
       this._runInit();
-    }
+    };
+
+    render = () => this._renderFn(this);
 
     _runInit =() => {
       this.postHelper.loadPostsIndex()
-        .then(() => this._onInit(this));
+        .then(() => this._renderFn(this));
     };
   }
 
