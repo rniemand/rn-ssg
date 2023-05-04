@@ -45,6 +45,13 @@
       console.log('renderPost', postId)
     };
 
+    clearSelectedPost = () => {
+      this.currentPostHtml = null;
+      this.selectedPost = null;
+      this.loadingPost = false;
+      app.instance.render();
+    };
+
     loadSelectedPost = (post) => {
       this.loadingPost = true;
       this.selectedPost = post;

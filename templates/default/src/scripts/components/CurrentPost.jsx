@@ -10,6 +10,7 @@
       if(!postHtml) return null;
 
       return (<div className="post">
+        <button onClick={postHelper.clearSelectedPost}>Post list</button>
         <app.components.PostHeader post={postHelper.selectedPost} />
         <div dangerouslySetInnerHTML={{ __html: postHtml }}></div>
       </div>);
