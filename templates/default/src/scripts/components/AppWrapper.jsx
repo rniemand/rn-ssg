@@ -17,11 +17,9 @@
             <tbody>
               <tr>
                 <td>
-                  <div>Posts List</div>
                   <app.components.PostArchiveList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
                 </td>
                 <td>
-                  <div>POST Content here</div>
                   <app.components.PostsList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
                   <app.components.CurrentPost postHelper={postHelper} />
                 </td>

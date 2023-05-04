@@ -13,7 +13,7 @@
         <button onClick={postHelper.clearSelectedPost}>Post list</button>
         <app.components.PostHeader post={postHelper.selectedPost} metadata={postHelper.postMetadata} />
         <app.components.PostToc toc={postHelper.selectedPostToc} metadata={postHelper.postMetadata} />
-        <div dangerouslySetInnerHTML={{ __html: postHtml }}></div>
+        <div className="content" dangerouslySetInnerHTML={{ __html: postHtml }}></div>
       </div>);
 		}
 	}

@@ -1,5 +1,15 @@
-((app) => {
+((app, _showdown) => {
   const _logger = app.logger;
+
+  const converter = new _showdown.Converter();
+  converter.setOption("omitExtraWLInCodeBlocks", true);
+  converter.setOption("parseImgDimensions", true);
+  converter.setOption("simplifiedAutoLink", true);
+  converter.setOption("tables", true);
+  converter.setOption("openLinksInNewWindow", true);
+  converter.setOption("emoji", true);
+  converter.setOption("metadata", true);
+  converter.setOption("backslashEscapesHTMLTags", true);
 
   class PostHelper {
     constructor(){
@@ -70,20 +80,12 @@
           response.text().then(
             (markdown) => {
               const generatedHtml = converter.makeHtml(markdown);
-
-              // renderToc(toc);
-
-              // for (const cb of document.querySelectorAll(
-              //   "#content pre code"
-              // )) {
-              //   processCodeBlock(cb);
-              // }
-
               this.loadingPost = false;
               this.currentPostHtml = generatedHtml;
               this.postMetadata = converter.getMetadata();
               this.selectedPostToc = this._generatePostToc(markdown);
               app.instance.render();
+              app.helpers._cbHelper.runHighlight();
             },
             (error) => {
               //todo: complete this
@@ -163,4 +165,4 @@
   }
 
   app.helpers.PostHelper = PostHelper;
-})(RnSSG);
+})(RnSSG, showdown);
