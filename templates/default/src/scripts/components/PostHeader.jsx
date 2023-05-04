@@ -9,8 +9,6 @@
 			const metadata = this.props.metadata;
 			const dateFormatted = post.date.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
 
-			console.log('metadata', metadata)
-      
 			return (<div className="header">
 				<h1>{post.title}</h1>
 				<div className="post-info">

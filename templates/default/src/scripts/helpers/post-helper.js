@@ -12,6 +12,7 @@
       this.currentPostHtml = null;
       this.selectedPost = null;
       this.postMetadata = null;
+      this.selectedPostToc = [];
     };
 
     loadPostsIndex = () => {
@@ -53,6 +54,7 @@
       this.selectedPost = null;
       this.postMetadata = null;
       this.loadingPost = false;
+      this.selectedPostToc = [];
       app.helpers._windowHelper.clearUrlHash();
       app.instance.render();
     };
@@ -68,31 +70,6 @@
           response.text().then(
             (markdown) => {
               const generatedHtml = converter.makeHtml(markdown);
-              const metadata = converter.getMetadata();
-
-              // const toc = [];
-              // const knownSlugs = [];
-              // const titles = markdown
-              //   .split("\n")
-              //   .filter((x) => x.indexOf("#") === 0);
-
-              // for (const title of titles) {
-              //   const cleanTitle = title.replace(/#{1,}/, "").trim();
-              //   let slug = cleanTitle.toLowerCase().replace(/[^\w]/gi, "");
-              //   if (knownSlugs.indexOf(slug) > -1) {
-              //     slug =
-              //       slug +
-              //       "-" +
-              //       knownSlugs.filter((x) => x.indexOf(slug) === 0).length;
-              //   }
-              //   knownSlugs.push(slug);
-
-              //   toc.push({
-              //     title: cleanTitle,
-              //     level: title.split(" ")[0].length,
-              //     slug: slug,
-              //   });
-              // }
 
               // renderToc(toc);
 
@@ -102,10 +79,10 @@
               //   processCodeBlock(cb);
               // }
 
-
               this.loadingPost = false;
               this.currentPostHtml = generatedHtml;
-              this.postMetadata = metadata;
+              this.postMetadata = converter.getMetadata();
+              this.selectedPostToc = this._generatePostToc(markdown);
               app.instance.render();
             },
             (error) => {
@@ -158,6 +135,30 @@
       }
 
       this.loadSelectedPost(this._postLookup[postId]);
+    };
+
+    _generatePostToc = (markdown) => {
+      const toc = [];
+      const knownSlugs = [];
+      const titles = markdown.split("\n").filter((x) => x.indexOf("#") === 0);
+
+      for (const title of titles) {
+        const cleanTitle = title.replace(/#{1,}/, "").trim();
+        let slug = cleanTitle.toLowerCase().replace(/[^\w]/gi, "");
+
+        if (knownSlugs.indexOf(slug) > -1) {
+          slug = slug + "-" + knownSlugs.filter((x) => x.indexOf(slug) === 0).length;
+        }
+        knownSlugs.push(slug);
+
+        toc.push({
+          title: cleanTitle,
+          level: title.split(" ")[0].length,
+          slug: slug,
+        });
+      }
+
+      return toc;
     };
   }
 

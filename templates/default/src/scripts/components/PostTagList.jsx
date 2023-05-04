@@ -6,7 +6,7 @@
 
 		render() {
 			const tags = this.props.tags || '';
-      if(tags === '') return null;
+      if(tags === '' || tags === '[]') return null;
 
       const arrTags = tags.replace('[','').replace(']','').split(',');
       if(arrTags.length === 0) return null;
