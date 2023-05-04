@@ -14,11 +14,23 @@ window.RnSSG = window.RnSSG || {};
 
   app.helpers = {};
   app.components = {};
+  app.enums = {};
+
+  app.enums.LogSeverity = {
+    Trace: 0,
+    Debug: 1,
+    Info: 2,
+    Warning: 3,
+    Error: 4,
+    Fatal: 5,
+  };
+
   app.config = {
     generated: createGeneratedConfig(),
     logging: {
       enabled: true,
       logFetch: true,
+      minSeverity: app.enums.LogSeverity.Trace,
     }
   };
 })(RnSSG, window);

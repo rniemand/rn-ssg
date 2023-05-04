@@ -1,5 +1,5 @@
 ((app) => {
-  const logger = app.logger;
+  const _logger = app.logger;
 
   class PostHelper {
     constructor(){
@@ -9,7 +9,8 @@
 
     loadPostsIndex = () => {
       return new Promise((resolve, reject) => {
-        logger.logFetch(this.postsIndexUrl);
+        _logger.logFetch(this.postsIndexUrl);
+
         fetch(this.postsIndexUrl).then((response) => {
           if (response.status === 404) {
             reject(response);
