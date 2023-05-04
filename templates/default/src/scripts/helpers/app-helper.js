@@ -12,9 +12,7 @@
 
     _runInit =() => {
       this.postHelper.loadPostsIndex()
-        .then(() => {
-          console.log('we be done');
-        });
+        .then(() => this._onInit(this));
     };
   }
 

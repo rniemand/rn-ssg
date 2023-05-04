@@ -3,8 +3,23 @@
   const Severity = app.enums.LogSeverity;
 
   class AppLogger {
-    logWarning = (message) => {
+    info = (message) => {
+      if(!this._canLog(Severity.Info)) return;
+      console.log(`[INFO] ${message}`);
+    };
 
+    warning = (message) => {
+      if(!this._canLog(Severity.Warning)) return;
+      console.log(`[WARNING] ${message}`);
+    };
+
+    error = (message) => {
+      if(!this._canLog(Severity.Error)) return;
+      if(message instanceof Error) {
+        console.log(message);
+      } else {
+        console.log(`[ERROR] ${message}`);
+      }
     };
 
     logFetch = (url) => {

@@ -10,15 +10,27 @@
     loadPostsIndex = () => {
       return new Promise((resolve, reject) => {
         _logger.logFetch(this.postsIndexUrl);
+        this.postIndexLoaded = false;
 
         fetch(this.postsIndexUrl).then((response) => {
           if (response.status === 404) {
+            _logger.warning(`Failed to fetch URL: ${this.postsIndexUrl}`);
             reject(response);
             return;
           }
-
-          response.json().then(resolve, reject);
-        }, reject);
+          
+          response.json().then((json) => {
+            _logger.info(`Loaded ${response.url}`);
+            this.postIndexLoaded = true;
+            resolve(json);
+          }, error => {
+            _logger.error(error);
+            reject(error);
+          });
+        }, error => {
+          _logger.error(error);
+          reject(error);
+        });
       });
     };
   }
