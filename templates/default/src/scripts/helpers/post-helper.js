@@ -6,6 +6,8 @@
       this.postIndexLoaded = false;
       this.postsIndexUrl = '/_rnssg/posts.json';
       this.postsIndex = [];
+      this.allPosts = [];
+      this.currentPost = null;
     }
 
     loadPostsIndex = () => {
@@ -13,6 +15,7 @@
         _logger.logFetch(this.postsIndexUrl);
         this.postIndexLoaded = false;
         this.postsIndex = [];
+        this.allPosts = [];
 
         fetch(this.postsIndexUrl).then((response) => {
           if (response.status === 404) {
@@ -36,9 +39,14 @@
       });
     };
 
+    renderPost = (postId) => {
+      console.log('renderPost', postId)
+    };
+
     _processPostsIndex = (json) => {
       this.postIndexLoaded = true;
       this.postsIndex = [];
+      this.allPosts = [];
 
       // Map and sort post entries
       const mappedPosts = json.posts.map(x => new app.models.Post(x));
@@ -51,14 +59,17 @@
 
       // Generate post year object
       const postYearAggr = {};
+      const allPosts = [];
       for(const post of mappedPosts) {
         post._id = post._date.replace(/[^\d]/gi, '');
         if(postYearAggr[post.postYear] === void 0) postYearAggr[post.postYear] = {};
         if(postYearAggr[post.postYear][post.postMonth] === void 0) postYearAggr[post.postYear][post.postMonth] = [];
         postYearAggr[post.postYear][post.postMonth].push(post);
+        allPosts.push(post);
       }
 
       this.postsIndex = postYearAggr;
+      this.allPosts = allPosts.reverse();
     };
   }
 
