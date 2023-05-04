@@ -7,6 +7,8 @@
       this.path = postJson.path;
       this.postYear = this.date.getFullYear();
       this.postMonth = this.date.getMonth() + 1;
+      this.description = postJson.description;
+      this.tags = postJson.tags;
     }
   }
 

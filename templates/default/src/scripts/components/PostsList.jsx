@@ -1,15 +1,22 @@
 ((app) => {
-  class PostsList extends React.Component {
+	class PostsList extends React.Component {
 		constructor(props) {
 			super(props);
 		}
 
 		render() {
-      return (<div>
-        <p>posts list</p>
-      </div>);
+			const postHelper = this.props.postHelper;
+			if (postHelper.allPosts.length === 0) {
+				return (<div>No posts to display</div>);
+			}
+
+			return (<div>
+				{postHelper.allPosts.slice(0, 10).map(entry => {
+					return (<app.components.PostListEntry key={entry._id} entry={entry} />);
+				})}
+			</div>);
 		}
 	}
 
-  app.components.PostsList = PostsList;
+	app.components.PostsList = PostsList;
 })(RnSSG);
