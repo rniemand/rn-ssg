@@ -40,6 +40,7 @@ class RnSsgConfigService : IConfigFileService
     config.RootDir = _path.GetDirectoryName(configFilePath)!;
     config.OutputDir = ProcessPath(config, config.OutputDir);
     config.ContentDir = ProcessPath(config, config.ContentDir);
+    config.PostsDir = _path.Join(config.ContentDir, RnSsgConstants.PostsDir);
 
     return config;
   }
@@ -58,7 +59,7 @@ class RnSsgConfigService : IConfigFileService
   private string ProcessPath(RnSsgConfig config, string path)
   {
     if (path.StartsWith("./"))
-      path = _path.Join(config.RootDir, path.Substring(2));
+      path = _path.Join(config.RootDir, path[2..]);
 
     return path;
   }

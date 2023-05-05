@@ -18,4 +18,7 @@ class RnSsgConfig
 
   [JsonProperty("outputDir")]
   public string OutputDir { get; set; } = "./output";
+
+  [JsonIgnore]
+  public string PostsDir { get; set; } = string.Empty;
 }
