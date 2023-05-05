@@ -9,14 +9,20 @@
       const pageHelper = this.props.pageHelper;
 
       const onPostSelectedHandler = (post) => {
-        pageHelper.clearSelectedPage();
+        pageHelper.clearSelectedPage(true);
         postHelper.loadSelectedPost(post);
       };
 
       const onPageSelectedHandler = (page) => {
-        postHelper.clearSelectedPost();
+        postHelper.clearSelectedPost(true);
         pageHelper.loadSelectedPage(page);
       };
+
+      const onListPostsClickHandler = (year, month) => {
+        postHelper.clearSelectedPost(true);
+        pageHelper.clearSelectedPage(true);
+        postHelper.listPosts(year, month);
+      }
 
       return (
         <div className="rnssg">
@@ -29,11 +35,11 @@
               </tr>
               <tr>
                 <td>
-                  <app.components.PostArchiveList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
+                  <app.components.PostArchiveList postHelper={postHelper} onPostSelected={onPostSelectedHandler} onListPostsClick={onListPostsClickHandler} />
                 </td>
                 <td>
                   <app.components.CurrentPage pageHelper={pageHelper} />
-                  <app.components.PostsList postHelper={postHelper} pageHelper={pageHelper} onPostSelected={onPostSelectedHandler} />
+                  <app.components.PostsList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
                   <app.components.CurrentPost postHelper={postHelper} />
                 </td>
               </tr>

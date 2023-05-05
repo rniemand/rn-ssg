@@ -49,6 +49,7 @@
       this.selectedPage = page;
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
+      app.state.currentMode = 'page';
 
       fetch(page.path).then(
         (response) => {
@@ -80,12 +81,12 @@
       this.pageLoading = false;
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
-
       app.helpers._windowHelper.clearUrlHash();
+      app.state.currentMode = 'home';
 
       if ((skipRender || false) === true) return;
       app.instance.render('PageHelper.clearSelectedPage()');
-    }
+    };
 
     _processPages = (pages) => {
       const processed = [];

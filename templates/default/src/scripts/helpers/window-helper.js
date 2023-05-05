@@ -18,6 +18,10 @@
       return match[1];
     };
 
+    setCustomPageUrl = (url) => {
+      _window.location.hash = url;
+    };
+
     setActivePostUrl = (post) => {
       const postUrlSegment = app.config.postUrlTemplate
         .replace('{id}', post.id)

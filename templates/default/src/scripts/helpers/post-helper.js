@@ -58,8 +58,16 @@
       this.selectedPostToc = [];
       this.nextPost = null;
       this.prevPost = null;
-      app.helpers._windowHelper.clearUrlHash();
-      app.helpers._html.setPageTitle('Home');
+
+      if (app.state.currentMode === 'post') {
+        app.state.currentMode = 'post-list';
+        app.helpers._html.setPageTitle('Posts List');
+        app.helpers._windowHelper.setCustomPageUrl('/posts');
+      } else {
+        app.state.currentMode = 'home';
+        app.helpers._html.setPageTitle('Home');
+        app.helpers._windowHelper.clearUrlHash();
+      }
 
       if ((skipRender || false) === true) return;
       app.instance.render('PostHelper.clearSelectedPost()');
@@ -72,6 +80,7 @@
       this.prevPost = null;
       app.helpers._windowHelper.setActivePostUrl(post);
       app.instance.render('PostHelper.loadSelectedPost()');
+      app.state.currentMode = 'post';
 
       // set prev/next post
       const curPostIndex = this.allPosts.indexOf(post);
@@ -102,6 +111,17 @@
           console.error(error);
         }
       );
+    };
+
+    listPosts = (year, month) => {
+      let url = '/posts';
+      if (year) url += `/${year}`;
+      if (month) url += `/${month}`;
+
+      app.state.currentMode = 'list-posts';
+      app.helpers._html.setPageTitle('Posts List');
+      app.helpers._windowHelper.setCustomPageUrl(url);
+      app.instance.render('PostHelper.listPosts()');
     };
 
     _processPostsIndex = (posts) => {

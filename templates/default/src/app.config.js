@@ -16,6 +16,9 @@ window.RnSSG = window.RnSSG || {};
   app.components = {};
   app.enums = {};
   app.models = {};
+  app.state = {
+    currentMode: 'home'
+  };
   app.instance = null;
 
   app.enums.LogSeverity = {

@@ -5,20 +5,11 @@
 		}
 
 		render() {
+			if (app.state.currentMode !== 'home' && app.state.currentMode !== 'post-list') return null;
 			const postHelper = this.props.postHelper;
-			const pageHelper = this.props.pageHelper;
 
-			if (postHelper.selectedPost) return null;
-			if (pageHelper.selectedPage) return null;
-
-
-			if (postHelper.allPosts.length === 0) {
-				return (<div>No posts to display</div>);
-			}
-
-			if (postHelper.loadingPost) {
-				return (<div>Loading selected post</div>);
-			}
+			if (postHelper.allPosts.length === 0) return (<div>No posts to display</div>);
+			if (postHelper.loadingPost) return (<div>Loading selected post</div>);
 
 			const onViewPostClickHandler = (post) => {
 				this.props.onPostSelected(post);
