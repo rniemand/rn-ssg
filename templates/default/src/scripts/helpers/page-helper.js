@@ -58,7 +58,7 @@
               this.pageLoading = false;
               this.currentPageHtml = generatedHtml;
               this.currentPageMetadata = app.helpers._mdHelper.getMetadata();
-              app.instance.render();
+              app.instance.render('PageHelper.loadSelectedPage()');
               app.helpers._cbHelper.runHighlight();
             },
             (error) => {
@@ -83,7 +83,7 @@
       app.helpers._windowHelper.clearUrlHash();
 
       if((skipRender || false) === true) return;
-      app.instance.render();
+      app.instance.render('PageHelper.clearSelectedPage()');
     }
 
     _processPages = (pages) => {

@@ -35,7 +35,8 @@ window.RnSSG = window.RnSSG || {};
     pageUrlRegex: new RegExp('\\/page\\/(\\d{1,})\\/'),
     logging: {
       enabled: true,
-      logFetch: true,
+      logFetch: false,
+      logRenderCalls: true,
       minSeverity: app.enums.LogSeverity.Trace,
     }
   };

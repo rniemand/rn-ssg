@@ -61,7 +61,7 @@
       app.helpers._windowHelper.clearUrlHash();
 
       if ((skipRender || false) === true) return;
-      app.instance.render();
+      app.instance.render('PostHelper.clearSelectedPost()');
     };
 
     loadSelectedPost = (post) => {
@@ -70,7 +70,7 @@
       this.nextPost = null;
       this.prevPost = null;
       app.helpers._windowHelper.setActivePostUrl(post);
-      app.instance.render();
+      app.instance.render('PostHelper.loadSelectedPost()');
 
       // set prev/next post
       const curPostIndex = this.allPosts.indexOf(post);
@@ -86,7 +86,7 @@
               this.currentPostHtml = generatedHtml;
               this.postMetadata = app.helpers._mdHelper.getMetadata();
               this.selectedPostToc = this._generatePostToc(markdown);
-              app.instance.render();
+              app.instance.render('PostHelper.loadSelectedPost()');
               app.helpers._cbHelper.runHighlight();
             },
             (error) => {

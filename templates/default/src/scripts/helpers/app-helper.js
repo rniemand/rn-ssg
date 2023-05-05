@@ -11,7 +11,11 @@
       this._runInit();
     };
 
-    render = () => this._renderFn(this);
+    render = (caller) => {
+      if(!caller) throw new Error('You need to pass a caller into this function');
+      app.logger.renderCall(caller);
+      this._renderFn(this);
+    };
 
     _runInit =() => {
       this.postHelper.loadPostsIndex()

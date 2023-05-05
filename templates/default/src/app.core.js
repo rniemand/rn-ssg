@@ -3,6 +3,11 @@
   const Severity = app.enums.LogSeverity;
 
   class AppLogger {
+    renderCall = (caller) => {
+      if(!_config.enabled || !_config.logRenderCalls) return;
+      console.log(`(RENDER) Caller: ${caller}`);
+    };
+
     info = (message) => {
       if(!this._canLog(Severity.Info)) return;
       console.log(`[INFO] ${message}`);
