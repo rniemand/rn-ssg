@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using RnCore.Abstractions;
 using RnCore.Logging;
-using RnSSG.Factories;
 using RnSSG.Helpers;
 using RnSSG.Services;
 using RnSSG.Utils;
@@ -35,8 +34,9 @@ static class DIContainer
       .AddSingleton<IPathAbstraction, PathAbstraction>()
       .AddSingleton<IConfigFileService, RnSsgConfigService>()
       .AddSingleton<IEnvironmentAbstraction, EnvironmentAbstraction>()
-      .AddSingleton<IBlogPageFileFactory, BlogPageFileFactory>()
+      .AddSingleton<IBlogPageHelper, BlogPageHelper>()
       .AddSingleton<IMarkdownFileHelper, MarkdownFileHelper>()
+      .AddSingleton<IBlogPostHelper, BlogPostHelper>()
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
     ServiceProvider = serviceCollection.BuildServiceProvider();

@@ -1,9 +1,8 @@
 using McMaster.Extensions.CommandLineUtils;
 using RnCore.Abstractions;
 using RnCore.Logging;
-using RnSSG.Factories;
+using RnSSG.Helpers;
 using RnSSG.Models;
-using RnSSG.Models.Json;
 using RnSSG.Services;
 
 namespace RnSSG.Commands;
@@ -18,28 +17,22 @@ class GenerateMetadataCommand
   private readonly IEnvironmentAbstraction _environment;
   private readonly IDirectoryAbstraction _directory;
   private readonly IConfigFileService _configFileService;
-  private readonly IJsonHelper _jsonHelper;
-  private readonly IPathAbstraction _path;
-  private readonly IFileAbstraction _file;
-  private readonly IBlogPageFileFactory _blogPageFileFactory;
+  private readonly IBlogPageHelper _blogPageHelper;
+  private readonly IBlogPostHelper _blogPostHelper;
 
   public GenerateMetadataCommand(ILoggerAdapter<GenerateMetadataCommand> logger,
     IEnvironmentAbstraction environment,
     IDirectoryAbstraction directory,
     IConfigFileService configFileService,
-    IJsonHelper jsonHelper,
-    IPathAbstraction path,
-    IFileAbstraction file,
-    IBlogPageFileFactory blogPageFileFactory)
+    IBlogPageHelper blogPageHelper,
+    IBlogPostHelper blogPostHelper)
   {
     _logger = logger;
     _environment = environment;
     _directory = directory;
     _configFileService = configFileService;
-    _jsonHelper = jsonHelper;
-    _path = path;
-    _file = file;
-    _blogPageFileFactory = blogPageFileFactory;
+    _blogPageHelper = blogPageHelper;
+    _blogPostHelper = blogPostHelper;
   }
 
   public async Task<int> OnExecuteAsync()
@@ -68,55 +61,15 @@ class GenerateMetadataCommand
 
   private void GeneratePostsList(RnSsgConfig config)
   {
-    var postFiles = _directory.GetFiles(config.PostsDir, "*.md", SearchOption.AllDirectories);
-    var mappedPosts = postFiles
-      .Select(postFilePath => new BlogPostFile(postFilePath, config.PostsDir))
-      .ToList();
-
-    var postId = 1;
-    var blogPostList = mappedPosts
-      .Select(postFile => new BlogPostListEntry
-      {
-        Title = postFile.Metadata.Title,
-        Path = $"/_posts{postFile.RelativePath}",
-        Date = postFile.Metadata.DateTimeOffset,
-        Description = "nothing to see",
-        Tags = postFile.Metadata.Tags,
-        // todo: use the correct author here
-        Author = "Richard Niemand",
-        Id = postId++
-      })
-      .ToList();
-
-    var targetFile = _path.Join(config.OutputDir, RnSsgConstants.PostsIndexFile);
-    var blogPostListJson = _jsonHelper.SerializeObject(blogPostList);
-
-    if (_file.Exists(targetFile)) _file.Delete(targetFile);
-    _file.WriteAllText(targetFile, blogPostListJson);
+    var postFiles = _blogPostHelper.GetBlogPostFiles(config);
+    var postListEntries = _blogPostHelper.MapBlogPostList(postFiles);
+    _blogPostHelper.WritePostsJsonFile(config, postListEntries);
   }
 
   private void GeneratePagesList(RnSsgConfig config)
   {
-    var pagesFiles = _directory.GetFiles(config.PagesDir, "*.md", SearchOption.AllDirectories);
-    var blogPageFiles = pagesFiles
-      .Select(filePath => _blogPageFileFactory.GetBlogPageFile(config, filePath))
-      .ToList();
-
-    var pageId = 1;
-    var blogPageListEntries = blogPageFiles
-      .Select(pageFile => new BlogPageListEntry
-      {
-        Title = pageFile.FileName,
-        Id = pageId++,
-        Order = pageFile.Metadata.Order,
-        Path = $"/_tabs{pageFile.RelativePath}"
-      })
-      .ToList();
-
-    var targetFile = _path.Join(config.OutputDir, RnSsgConstants.PagesIndexFile);
-    var pagesJson = _jsonHelper.SerializeObject(blogPageListEntries);
-
-    if (_file.Exists(targetFile)) _file.Delete(targetFile);
-    _file.WriteAllText(targetFile, pagesJson);
+    var pageFiles = _blogPageHelper.GetBlogPageFiles(config);
+    var pageListEntries = _blogPageHelper.MapBlogPageListEntries(config, pageFiles);
+    _blogPageHelper.WritePostsJsonFile(config, pageListEntries);
   }
 }

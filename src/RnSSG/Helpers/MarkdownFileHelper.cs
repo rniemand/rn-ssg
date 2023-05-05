@@ -8,6 +8,8 @@ interface IMarkdownFileHelper
 {
   string ExtractRawMetadata(string filePath);
   string ExtractRawMetadata(string filePath, IEnumerable<string> lines);
+  Dictionary<string, string> MapMetadataDictionary(string filePath, string rawMetadata);
+  Dictionary<string, string> MapMetadataDictionary(string filePath, string[] metadataLines);
 }
 
 class MarkdownFileHelper : IMarkdownFileHelper
@@ -57,5 +59,34 @@ class MarkdownFileHelper : IMarkdownFileHelper
       throw new Exception($"No metadata found in: {filePath}");
 
     return sb.ToString();
+  }
+
+  public Dictionary<string, string> MapMetadataDictionary(string filePath, string rawMetadata) =>
+    MapMetadataDictionary(filePath, rawMetadata.Split("\n", StringSplitOptions.RemoveEmptyEntries));
+
+  public Dictionary<string, string> MapMetadataDictionary(string filePath, string[] metadataLines)
+  {
+    var dictionary = new Dictionary<string,string>(StringComparer.InvariantCultureIgnoreCase);
+
+    foreach (var rawLine in metadataLines)
+    {
+      if (rawLine.Trim().Length == 0) continue;
+      var indexOf = rawLine.IndexOf(":", StringComparison.Ordinal);
+
+      if (indexOf == -1)
+        throw new Exception($"Invalid metadata in: {filePath}");
+
+      var key = rawLine[..indexOf].Trim();
+      var value = rawLine[(indexOf + 1)..].Trim();
+      if (value.StartsWith('\'') && value.EndsWith('\''))
+      {
+        value = value[1..];
+        value = value[..^1];
+      }
+
+      dictionary[key] = value;
+    }
+
+    return dictionary;
   }
 }
