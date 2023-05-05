@@ -5,6 +5,17 @@
   class HtmlHelper {
     constructor() {
       this.googleAnalyticsConfigured = false;
+
+      if (app.config.googleAnalytics) {
+        if (!app.config.googleAnalyticsID || app.config.googleAnalyticsID.length < 5) {
+          app.config.googleAnalytics = false;
+        } else {
+          console.log('adding google analytics');
+          var newScript = _document.createElement("script");
+          newScript.src = `https://www.googletagmanager.com/gtag/js?id=${app.config.googleAnalyticsID}`;
+          _document.head.appendChild(newScript);
+        }
+      }
     }
 
     setPageTitle = (title) => {
