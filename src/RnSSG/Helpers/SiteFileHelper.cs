@@ -1,6 +1,6 @@
 using RnCore.Abstractions;
 
-namespace RnSSG.Utils;
+namespace RnSSG.Helpers;
 
 interface ISiteFileHelper
 {
@@ -12,7 +12,7 @@ interface ISiteFileHelper
 class SiteFileHelper : ISiteFileHelper
 {
   public string ConfigFile { get; }
-  public Dictionary<string, string> Directories { get; }  = new();
+  public Dictionary<string, string> Directories { get; } = new();
 
   private readonly IPathAbstraction _path;
 

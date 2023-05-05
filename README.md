@@ -46,7 +46,6 @@ Placeholder for now...
 
 ## Task List
 
-- STOP DOUBLE CALLING RENDER
 - Fix post archive styling
 - Fix table of contents on active blog post
 - Add support for Google Analytics
