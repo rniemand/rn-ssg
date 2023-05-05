@@ -33,3 +33,12 @@ npm run watch
 ```
 
 - Open [http://localhost:8080/](http://localhost:8080/) to view the running application.
+
+## Commands
+
+Placeholder for now...
+
+- generate
+  - config - generates initial site configuration
+  - metadata - builds site specific metadata
+  - site - scaffolds a new site using the proposed structure

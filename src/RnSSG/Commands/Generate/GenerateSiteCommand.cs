@@ -6,20 +6,20 @@ using RnSSG.Utils;
 
 namespace RnSSG.Commands;
 
-[Command("init", "i", Description = "Initializes a new site with expected folder structure and configuration.")]
-class InitSiteCommand
+[Command("site", Description = "Generates your site using the provided configuration.")]
+class GenerateSiteCommand
 {
   [Argument(0, "Root directory")]
   public string SourceDir { get; set; } = string.Empty;
 
-  private readonly ILoggerAdapter<InitSiteCommand> _logger;
+  private readonly ILoggerAdapter<GenerateSiteCommand> _logger;
   private readonly IConsoleUtils _consoleUtils;
   private readonly IDirectoryAbstraction _directory;
   private readonly IJsonHelper _jsonHelper;
   private readonly IFileAbstraction _file;
   private readonly IPathAbstraction _path;
 
-  public InitSiteCommand(ILoggerAdapter<InitSiteCommand> logger,
+  public GenerateSiteCommand(ILoggerAdapter<GenerateSiteCommand> logger,
     IConsoleUtils consoleUtils,
     IDirectoryAbstraction directory,
     IJsonHelper jsonHelper,

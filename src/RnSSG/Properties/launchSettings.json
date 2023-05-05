@@ -2,7 +2,7 @@
   "profiles": {
     "RnSSG": {
       "commandName": "Project",
-      "commandLineArgs": "site init \"\\\\192.168.0.60\\Backups\\blog-markdown\""
+      "commandLineArgs": "generate metadata"
     }
   }
 }

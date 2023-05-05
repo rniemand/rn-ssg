@@ -6,19 +6,19 @@ using RnSSG.Utils;
 
 namespace RnSSG.Commands;
 
-[Command("generate", "g", Description = "Generates initial configuration used by this tool.")]
-class GenerateConfigurationCommand
+[Command("config",  Description = "Generates initial configuration used by this tool.")]
+class GenerateConfigCommand
 {
   [Argument(0, "Root directory")]
   public string SourceDir { get; set; } = string.Empty;
 
-  private readonly ILoggerAdapter<GenerateConfigurationCommand> _logger;
+  private readonly ILoggerAdapter<GenerateConfigCommand> _logger;
   private readonly IConsoleUtils _consoleUtils;
   private readonly IJsonHelper _jsonHelper;
   private readonly IFileAbstraction _file;
   private readonly IPathAbstraction _path;
 
-  public GenerateConfigurationCommand(ILoggerAdapter<GenerateConfigurationCommand> logger,
+  public GenerateConfigCommand(ILoggerAdapter<GenerateConfigCommand> logger,
     IConsoleUtils consoleUtils,
     IJsonHelper jsonHelper,
     IFileAbstraction file,
