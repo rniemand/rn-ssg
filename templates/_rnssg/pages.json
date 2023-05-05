@@ -1,12 +1,1 @@
-[
-  {
-    "id": 1,
-    "title": "About",
-    "path": "/_tabs/about.md"
-  },
-  {
-    "id": 2,
-    "title": "Post Series",
-    "path": "/_tabs/series.md"
-  }
-]
+[{"id":1,"title":"about","path":"/_tabs/about.md","order":1},{"id":2,"title":"archives","path":"/_tabs/archives.md","order":4},{"id":3,"title":"categories","path":"/_tabs/categories.md","order":5},{"id":4,"title":"projects","path":"/_tabs/projects.md","order":2},{"id":5,"title":"series","path":"/_tabs/series.md","order":3},{"id":6,"title":"tags","path":"/_tabs/tags.md","order":6}]

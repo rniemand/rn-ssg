@@ -44,11 +44,8 @@ class GenerateMetadataCommand
     var sourceDir = GetSourceDirectory();
     var config = _configFileService.GetConfig(sourceDir);
 
-    Console.WriteLine("Will need to generate site metadata");
-    Console.WriteLine($"\tSource DIR  : {sourceDir}");
-    Console.WriteLine($"\tConfig File : {config.OutputDir}");
-
     GeneratePostsList(config);
+    GeneratePagesList(config);
 
     return 0;
   }
@@ -73,10 +70,8 @@ class GenerateMetadataCommand
       .ToList();
 
     var postId = 1;
-    var blogPostList = new List<BlogPostListEntry>();
-    foreach (var postFile in mappedPosts)
-    {
-      blogPostList.Add(new BlogPostListEntry
+    var blogPostList = mappedPosts
+      .Select(postFile => new BlogPostListEntry
       {
         Title = postFile.Metadata.Title,
         Path = $"/_posts{postFile.RelativePath}",
@@ -86,14 +81,102 @@ class GenerateMetadataCommand
         // todo: use the correct author here
         Author = "Richard Niemand",
         Id = postId++
-      });
-    }
+      })
+      .ToList();
 
     var targetFile = _path.Join(config.OutputDir, RnSsgConstants.PostsIndexFile);
-    var blogPostListJson = _jsonHelper.SerializeObject(blogPostList, true);
+    var blogPostListJson = _jsonHelper.SerializeObject(blogPostList);
 
-    if(_file.Exists(targetFile)) _file.Delete(targetFile);
+    if (_file.Exists(targetFile)) _file.Delete(targetFile);
     _file.WriteAllText(targetFile, blogPostListJson);
+  }
+
+  private void GeneratePagesList(RnSsgConfig config)
+  {
+    var pagesFiles = _directory.GetFiles(config.PagesDir, "*.md", SearchOption.AllDirectories);
+    var blogPageFiles = pagesFiles
+      .Select(pagesFile => new BlogPageFile(pagesFile, config.PagesDir))
+      .ToList();
+
+    var pageId = 1;
+    var blogPageListEntries = blogPageFiles
+      .Select(pageFile => new BlogPageListEntry
+      {
+        Title = pageFile.FileName,
+        Id = pageId++,
+        Order = pageFile.Metadata.Order,
+        Path = $"/_tabs{pageFile.RelativePath}"
+      }).ToList();
+
+    var targetFile = _path.Join(config.OutputDir, RnSsgConstants.PagesIndexFile);
+    var pagesJson = _jsonHelper.SerializeObject(blogPageListEntries);
+
+    if (_file.Exists(targetFile)) _file.Delete(targetFile);
+    _file.WriteAllText(targetFile, pagesJson);
+  }
+}
+
+class BlogPageFile
+{
+  public string FilePath { get; }
+  public string RelativePath { get; set; }
+  public string FileName { get; set; }
+  public BlogPageMetadata Metadata { get; set; }
+
+  public BlogPageFile(string path, string basePath)
+  {
+    FilePath = path;
+    FileName = Path.GetFileNameWithoutExtension(path);
+
+    if (!path.StartsWith(basePath))
+      throw new Exception($"Need to add better path detection logic: {FilePath}");
+    RelativePath = path[basePath.Length..].Replace("\\", "/");
+
+    var rawContent = File.ReadAllLines(path);
+    var rawMetadata = ExtractRawMetadata(rawContent);
+    Metadata = MapMetadata(rawMetadata);
+  }
+
+  private string ExtractRawMetadata(IEnumerable<string> lines)
+  {
+    var foundStart = false;
+    var sb = new StringBuilder();
+
+    foreach (var line in lines)
+    {
+      switch (foundStart)
+      {
+        case false when line.Trim() == "---":
+          foundStart = true;
+          continue;
+        case false:
+          continue;
+      }
+
+      if (line.Trim() == "---") break;
+      sb.AppendLine(line);
+    }
+
+    if (!foundStart)
+      throw new Exception($"No metadata found in: {FilePath}");
+
+    return sb.ToString();
+  }
+
+  private BlogPageMetadata MapMetadata(string rawMetadata)
+  {
+    var mapped = new BlogPageMetadata();
+    var lines = rawMetadata.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+
+    foreach (var line in lines)
+    {
+      var indexOf = line.IndexOf(":", StringComparison.Ordinal);
+      if (indexOf == -1)
+        throw new Exception($"Invalid metadata in: {FilePath}");
+      mapped.SetProperty(line[..indexOf], line[(indexOf + 1)..].Trim());
+    }
+
+    return mapped;
   }
 }
 
@@ -108,7 +191,7 @@ class BlogPostFile
     FilePath = path;
 
     if (!path.StartsWith(basePath))
-      throw new Exception($"Need to add better path detection logic");
+      throw new Exception($"Need to add better path detection logic: {FilePath}");
     RelativePath = path[basePath.Length..].Replace("\\", "/");
 
     var rawContent = File.ReadAllLines(path);
@@ -159,6 +242,22 @@ class BlogPostFile
   }
 }
 
+class BlogPageMetadata
+{
+  public string Icon { get; set; } = string.Empty;
+  public int Order { get; set; } = 0;
+
+  public void SetProperty(string key, string value)
+  {
+    switch (key.ToLower().Trim())
+    {
+      case "icon": Icon = value; break;
+      case "order": Order = int.Parse(value); break;
+      default: return;
+    }
+  }
+}
+
 class BlogPostMetadata
 {
   public string Title { get; set; } = string.Empty;
@@ -195,6 +294,21 @@ class BlogPostMetadata
 
     return value[1..][..^1].Split(",", StringSplitOptions.RemoveEmptyEntries);
   }
+}
+
+class BlogPageListEntry
+{
+  [JsonProperty("id")]
+  public int Id { get; set; } = 0;
+
+  [JsonProperty("title")]
+  public string Title { get; set; } = string.Empty;
+
+  [JsonProperty("path")]
+  public string Path { get; set; } = string.Empty;
+
+  [JsonProperty("order")]
+  public int Order { get; set; }
 }
 
 class BlogPostListEntry

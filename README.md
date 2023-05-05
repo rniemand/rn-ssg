@@ -17,6 +17,7 @@ dotnet tool uninstall --global RnSSG
 - https://www.newtonsoft.com/json
 - https://github.com/showdownjs/showdown
 - https://prismjs.com/
+- https://prismjs.com/plugins/autoloader/
 - https://www.jsdelivr.com/
 - https://cdn.jsdelivr.net/npm/prismjs@1/components/
 - https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/
@@ -42,3 +43,26 @@ Placeholder for now...
   - config - generates initial site configuration
   - metadata - builds site specific metadata
   - site - scaffolds a new site using the proposed structure
+
+## Task List
+
+- STOP DOUBLE CALLING RENDER
+- Fix post archive styling
+- Fix table of contents on active blog post
+- Add support for Google Analytics
+- Update page title on post / page change
+- Order page links based on metadata
+- Add concept of default author
+- Rewrite documenation for CLI
+- Fix table styling
+- Fix image rendering logic (perhaps add a modal for more information)
+- Add category browser
+- Add tag browser
+- Add simple search to blog
+- Support for commenting on posts
+- Add new post scaffolder
+- Detect and load prism language files automatically
+- Add additional plugins for prism
+- Sort out ' quotes in post titles extracted from metadata
+- fix `shelll` in Installing MariaDB (MySQL) on Ubuntu
+- 

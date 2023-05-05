@@ -41,6 +41,7 @@ class RnSsgConfigService : IConfigFileService
     config.OutputDir = ProcessPath(config, config.OutputDir);
     config.ContentDir = ProcessPath(config, config.ContentDir);
     config.PostsDir = _path.Join(config.ContentDir, RnSsgConstants.PostsDir);
+    config.PagesDir = _path.Join(config.ContentDir, RnSsgConstants.PagesDir);
 
     return config;
   }

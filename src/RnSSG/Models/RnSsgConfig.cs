@@ -21,4 +21,7 @@ class RnSsgConfig
 
   [JsonIgnore]
   public string PostsDir { get; set; } = string.Empty;
+
+  [JsonIgnore]
+  public string PagesDir { get; set; } = string.Empty;
 }

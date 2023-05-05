@@ -1,7 +1,7 @@
 ((app, _showdown) => {
   const _logger = app.logger;
   class PostHelper {
-    constructor(){
+    constructor() {
       this.postIndexLoaded = false;
       this.loadingPost = false;
       this.postsIndexUrl = '/_rnssg/posts.json';
@@ -12,6 +12,8 @@
       this.selectedPost = null;
       this.postMetadata = null;
       this.selectedPostToc = [];
+      this.nextPost = null;
+      this.prevPost = null;
     };
 
     loadPostsIndex = () => {
@@ -27,12 +29,12 @@
             reject(response);
             return;
           }
-          
+
           response.json().then((json) => {
             _logger.info(`Loaded ${response.url}`);
             this._processPostsIndex(json);
 
-            if(app.helpers._windowHelper.isPostUrl()) {
+            if (app.helpers._windowHelper.isPostUrl()) {
               this._renderPost(app.helpers._windowHelper.getUrlPostId());
             }
 
@@ -54,17 +56,26 @@
       this.postMetadata = null;
       this.loadingPost = false;
       this.selectedPostToc = [];
+      this.nextPost = null;
+      this.prevPost = null;
       app.helpers._windowHelper.clearUrlHash();
 
-      if((skipRender || false) === true) return;
+      if ((skipRender || false) === true) return;
       app.instance.render();
     };
 
     loadSelectedPost = (post) => {
       this.loadingPost = true;
       this.selectedPost = post;
+      this.nextPost = null;
+      this.prevPost = null;
       app.helpers._windowHelper.setActivePostUrl(post);
       app.instance.render();
+
+      // set prev/next post
+      const curPostIndex = this.allPosts.indexOf(post);
+      this.prevPost = curPostIndex === 0 ? null : this.allPosts[curPostIndex - 1];
+      this.nextPost = curPostIndex + 1 >= this.allPosts.length ? null : this.allPosts[curPostIndex + 1];
 
       fetch(post.path).then(
         (response) => {
@@ -100,18 +111,18 @@
       // Map and sort post entries
       const mappedPosts = posts.map(x => new app.models.Post(x));
       mappedPosts.sort((a, b) => {
-				// (-) => a,b | (+) => b,a | (0) => same
-        if(a.date == b.date) return 0;
-        if(a.date < b.date) return -1;
+        // (-) => a,b | (+) => b,a | (0) => same
+        if (a.date == b.date) return 0;
+        if (a.date < b.date) return -1;
         return 1;
-			});
+      });
 
       // Generate post year object
       const postYearAggr = {};
       const allPosts = [];
-      for(const post of mappedPosts) {
-        if(postYearAggr[post.postYear] === void 0) postYearAggr[post.postYear] = {};
-        if(postYearAggr[post.postYear][post.postMonth] === void 0) postYearAggr[post.postYear][post.postMonth] = [];
+      for (const post of mappedPosts) {
+        if (postYearAggr[post.postYear] === void 0) postYearAggr[post.postYear] = {};
+        if (postYearAggr[post.postYear][post.postMonth] === void 0) postYearAggr[post.postYear][post.postMonth] = [];
         postYearAggr[post.postYear][post.postMonth].push(post);
         allPosts.push(post);
         this._postLookup[post.id] = post;
@@ -122,7 +133,7 @@
     };
 
     _renderPost = (postId) => {
-      if(this._postLookup[postId] === void 0) {
+      if (this._postLookup[postId] === void 0) {
         // todo: complete this...
         throw new Error(`Need to complete this!`);
       }
