@@ -1,6 +1,7 @@
 using McMaster.Extensions.CommandLineUtils;
 using RnCore.Abstractions;
 using RnCore.Logging;
+using RnSSG.Factories;
 using RnSSG.Models;
 using RnSSG.Models.Json;
 using RnSSG.Services;
@@ -20,6 +21,7 @@ class GenerateMetadataCommand
   private readonly IJsonHelper _jsonHelper;
   private readonly IPathAbstraction _path;
   private readonly IFileAbstraction _file;
+  private readonly IBlogPageFileFactory _blogPageFileFactory;
 
   public GenerateMetadataCommand(ILoggerAdapter<GenerateMetadataCommand> logger,
     IEnvironmentAbstraction environment,
@@ -27,7 +29,8 @@ class GenerateMetadataCommand
     IConfigFileService configFileService,
     IJsonHelper jsonHelper,
     IPathAbstraction path,
-    IFileAbstraction file)
+    IFileAbstraction file,
+    IBlogPageFileFactory blogPageFileFactory)
   {
     _logger = logger;
     _environment = environment;
@@ -36,12 +39,14 @@ class GenerateMetadataCommand
     _jsonHelper = jsonHelper;
     _path = path;
     _file = file;
+    _blogPageFileFactory = blogPageFileFactory;
   }
 
   public async Task<int> OnExecuteAsync()
   {
     var sourceDir = GetSourceDirectory();
     var config = _configFileService.GetConfig(sourceDir);
+    _logger.LogInformation("Using configuration: {dir}", config.FilePath);
 
     GeneratePostsList(config);
     GeneratePagesList(config);
@@ -94,7 +99,7 @@ class GenerateMetadataCommand
   {
     var pagesFiles = _directory.GetFiles(config.PagesDir, "*.md", SearchOption.AllDirectories);
     var blogPageFiles = pagesFiles
-      .Select(pagesFile => new BlogPageFile(pagesFile, config.PagesDir))
+      .Select(filePath => _blogPageFileFactory.GetBlogPageFile(config, filePath))
       .ToList();
 
     var pageId = 1;
@@ -105,7 +110,8 @@ class GenerateMetadataCommand
         Id = pageId++,
         Order = pageFile.Metadata.Order,
         Path = $"/_tabs{pageFile.RelativePath}"
-      }).ToList();
+      })
+      .ToList();
 
     var targetFile = _path.Join(config.OutputDir, RnSsgConstants.PagesIndexFile);
     var pagesJson = _jsonHelper.SerializeObject(blogPageListEntries);
