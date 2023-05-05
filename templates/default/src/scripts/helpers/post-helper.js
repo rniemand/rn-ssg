@@ -118,7 +118,7 @@
       if (year) url += `/${year}`;
       if (month) url += `/${month}`;
 
-      app.state.currentMode = 'list-posts';
+      app.state.currentMode = 'post-list';
       app.helpers._html.setPageTitle('Posts List');
       app.helpers._windowHelper.setCustomPageUrl(url);
       app.instance.render('PostHelper.listPosts()');

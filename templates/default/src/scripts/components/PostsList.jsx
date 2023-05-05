@@ -10,16 +10,60 @@
 
 			if (postHelper.allPosts.length === 0) return (<div>No posts to display</div>);
 			if (postHelper.loadingPost) return (<div>Loading selected post</div>);
+			let urlSegments = app.helpers._windowHelper.getUrlHash().split('/');
+			let title = 'Posts (Latest)';
+
+			this._getFilteredPosts(urlSegments);
 
 			const onViewPostClickHandler = (post) => {
 				this.props.onPostSelected(post);
 			};
 
-			return (<semanticUIReact.Item.Group divided>
-				{postHelper.allPosts.slice(0, 10).map(post => {
-					return (<app.components.PostListEntry key={post.id} post={post} onViewPostClick={onViewPostClickHandler} />);
-				})}
-			</semanticUIReact.Item.Group>);
+			if (urlSegments.length == 4) {
+				if (urlSegments[3] === 'all') {
+					title = `Posts from ${urlSegments[2]}`;
+				} else {
+					title = `Posts from ${urlSegments[2]}-${urlSegments[3].padStart(2, '0')}`;
+				}
+			}
+
+			return (<div className="post-list">
+				<h1>{title}</h1>
+
+				<div className="bc-filter">
+					<ul>
+						<li key='latest' onClick={postHelper.clearSelectedPost}>Latest</li>
+						{Object.keys(postHelper.postsIndex).map(year => {
+							return (<li key={year} onClick={() => postHelper.listPosts(year, 'all')}>{year}</li>);
+						})}
+					</ul>
+				</div>
+
+				{urlSegments.length === 4 && urlSegments[3] !== 'add' && (
+					<div className="bc-filter">
+						<ul>
+							<li key='all' onClick={() => postHelper.listPosts(urlSegments[2], 'all')}>All</li>
+							{Object.keys(postHelper.postsIndex[urlSegments[2]]).map(month => {
+								return (<li key={month} onClick={() => postHelper.listPosts(urlSegments[2], month)}>{month.padStart(2, '0')}</li>);
+							})}
+						</ul>
+					</div>
+				)}
+
+				<semanticUIReact.Item.Group divided>
+					{this._getFilteredPosts().map(post => {
+						return (<app.components.PostListEntry key={post.id} post={post} onViewPostClick={onViewPostClickHandler} />);
+					})}
+				</semanticUIReact.Item.Group>
+			</div>);
+		}
+
+		_getFilteredPosts = () => {
+			const postHelper = this.props.postHelper;
+			const urlSegments = app.helpers._windowHelper.getUrlHash().split('/');
+			if (!urlSegments || urlSegments.length < 4) return postHelper.allPosts.slice(0, 10);
+			if (urlSegments[3] === 'all') return postHelper.allPosts.filter(x => x.postYear == urlSegments[2]);
+			return postHelper.allPosts.filter(x => x.postYear == urlSegments[2] && x.postMonth == urlSegments[3]);
 		}
 	}
 

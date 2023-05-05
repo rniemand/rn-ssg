@@ -139,4 +139,31 @@ body {
       }
     }
   }
+
+  .post-list {
+    .bc-filter {
+      ul {
+        padding: 5px 8px;
+        list-style: none;
+        background-color: #f5f2f2;
+      }
+
+      ul li {
+        display: inline;
+        font-size: 18px;
+        color: #0275d8;
+        cursor: pointer;
+
+        &:hover {
+          color: #01447e;
+        }
+      }
+
+      ul li+li:before {
+        padding: 8px;
+        color: black;
+        content: "/\00a0";
+      }
+    }
+  }
 }
