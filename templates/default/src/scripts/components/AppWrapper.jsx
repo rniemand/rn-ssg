@@ -1,10 +1,10 @@
 ((app) => {
   class AppWrapper extends React.Component {
-		constructor(props) {
-			super(props);
-		}
+    constructor(props) {
+      super(props);
+    }
 
-		render() {
+    render() {
       const postHelper = this.props.postHelper;
       const pageHelper = this.props.pageHelper;
 
@@ -41,8 +41,8 @@
           </table>
         </div>
       );
-		}
-	}
+    }
+  }
 
   app.components.AppWrapper = AppWrapper;
 })(RnSSG);

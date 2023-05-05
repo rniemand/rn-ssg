@@ -10,16 +10,13 @@
       if (!pages || pages.length === 0) return null;
       const activePageId = pageHelper.selectedPage?.id || 0;
 
-      return (<ul className="page-nav">
+      return (<semanticUIReact.Menu stackable fluid>
         {pages.map(page => {
-          let classes = '';
-          if (activePageId == page.id) classes += 'active';
-
-          return (<li key={page.slug} onClick={() => this.props.onPageSelected(page)}>
-            <a className={classes}>{page.title}</a>
-          </li>);
+          return (<semanticUIReact.Menu.Item key={page.slug} onClick={() => this.props.onPageSelected(page)} active={activePageId == page.id}>
+            {page.title}
+          </semanticUIReact.Menu.Item>);
         })}
-      </ul>);
+      </semanticUIReact.Menu>);
     }
   }
 
