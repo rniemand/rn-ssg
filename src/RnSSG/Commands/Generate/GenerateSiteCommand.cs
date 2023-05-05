@@ -18,13 +18,15 @@ class GenerateSiteCommand
   private readonly IJsonHelper _jsonHelper;
   private readonly IFileAbstraction _file;
   private readonly IPathAbstraction _path;
+  private readonly IEnvironmentAbstraction _environment;
 
   public GenerateSiteCommand(ILoggerAdapter<GenerateSiteCommand> logger,
     IConsoleUtils consoleUtils,
     IDirectoryAbstraction directory,
     IJsonHelper jsonHelper,
     IFileAbstraction file,
-    IPathAbstraction path)
+    IPathAbstraction path,
+    IEnvironmentAbstraction environment)
   {
     _logger = logger;
     _consoleUtils = consoleUtils;
@@ -32,6 +34,7 @@ class GenerateSiteCommand
     _jsonHelper = jsonHelper;
     _file = file;
     _path = path;
+    _environment = environment;
   }
 
   public async Task<int> OnExecuteAsync(CommandLineApplication _)
@@ -66,10 +69,11 @@ class GenerateSiteCommand
 
   private string GetTargetDirectory()
   {
+    // todo: (GetTargetDirectory) extract to helper
     if (string.IsNullOrWhiteSpace(SourceDir))
-      return Environment.CurrentDirectory;
+      return _environment.CurrentDirectory;
 
-    if (!Directory.Exists(SourceDir))
+    if (!_directory.Exists(SourceDir))
       throw new Exception($"Unable to locate requested root directory: {SourceDir}");
 
     return SourceDir;
