@@ -119,4 +119,33 @@ pre {
       background-color: #fff9dd;
     }
   }
+
+  ul.page-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+
+    li {
+      float: left;
+      cursor: pointer;
+
+      a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+
+        &.active {
+          background-color: #177018;
+        }
+
+        &:hover {
+          background-color: #111;
+        }
+      }
+    }
+  }
 }
