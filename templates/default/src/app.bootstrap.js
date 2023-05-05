@@ -5,7 +5,8 @@
 
   app.instance = new app.helpers.AppHelper(ctx => {
     root.render(rel(app.components.AppWrapper, {
-      postHelper: ctx.postHelper
+      postHelper: ctx.postHelper,
+      pageHelper: ctx.pageHelper
     }));
   });
 })(RnSSG);

@@ -31,6 +31,8 @@ window.RnSSG = window.RnSSG || {};
     generated: createGeneratedConfig(),
     postUrlTemplate: '/post/{id}/{year}/{month}/{title}',
     postUrlRegex: new RegExp('\\/post\\/(\\d{1,})\\/\\d{4}\\/'),
+    pageUrlTemplate: '/page/{id}/{title}',
+    pageUrlRegex: new RegExp('\\/page\\/(\\d{1,})\\/'),
     logging: {
       enabled: true,
       logFetch: true,

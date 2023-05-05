@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "About",
+    "path": "/_tabs/about.md"
+  },
+  {
+    "id": 2,
+    "title": "Post Series",
+    "path": "/_tabs/series.md"
+  }
+]

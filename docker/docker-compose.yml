@@ -7,6 +7,7 @@ services:
     volumes:
       - ./../templates/default/dist:/usr/share/nginx/html
       - C:\Dev\personal\rniemand.github.io\_posts:/usr/share/nginx/html/_posts
+      - C:\Dev\personal\rniemand.github.io\_tabs:/usr/share/nginx/html/_tabs
       - C:\Dev\personal\rniemand.github.io\assets:/usr/share/nginx/html/assets
       - ./../templates/_rnssg:/usr/share/nginx/html/_rnssg
     ports:

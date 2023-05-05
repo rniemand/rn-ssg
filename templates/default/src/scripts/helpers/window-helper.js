@@ -4,8 +4,17 @@
       return app.config.postUrlRegex.test(this._getUrlHash());
     };
 
+    isPageUrl = () => {
+      return app.config.pageUrlRegex.test(this._getUrlHash());
+    };
+
     getUrlPostId = () => {
       const match = app.config.postUrlRegex.exec(this._getUrlHash());
+      return match[1];
+    };
+
+    getUrlPageId = () => {
+      const match = app.config.pageUrlRegex.exec(this._getUrlHash());
       return match[1];
     };
 
@@ -14,9 +23,17 @@
         .replace('{id}', post.id)
         .replace('{year}', post.postYear)
         .replace('{month}', post.postMonth)
-        .replace('{title}', encodeURI(post.title));
+        .replace('{title}', encodeURI(post.slug));
 
       _window.location.hash = postUrlSegment;
+    };
+
+    setActivePageUrl = (page) => {
+      const pageUrlSegment = app.config.pageUrlTemplate
+        .replace('{id}', page.id)
+        .replace('{title}', encodeURI(page.slug));
+
+      _window.location.hash = pageUrlSegment;
     };
 
     clearUrlHash = () => {

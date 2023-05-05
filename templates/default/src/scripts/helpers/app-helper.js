@@ -6,6 +6,7 @@
 
       this._renderFn = renderFn;
       this.postHelper = new app.helpers.PostHelper();
+      this.pageHelper = new app.helpers.PageHelper();
 
       this._runInit();
     };
@@ -14,6 +15,7 @@
 
     _runInit =() => {
       this.postHelper.loadPostsIndex()
+        .then(this.pageHelper.loadPagesIndex)
         .then(() => this._renderFn(this));
     };
   }

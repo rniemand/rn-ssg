@@ -30,6 +30,7 @@
         case "shell": return Prism.languages.shellsession;
         case "xml": return Prism.languages.markup;
         case "html": return Prism.languages.markup;
+        case "yaml": return Prism.languages.yaml;
         default: throw new Error(`unsupported language: ${shorthand}`);
       }
     };

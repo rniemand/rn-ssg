@@ -1,16 +1,5 @@
 ((app, _showdown) => {
   const _logger = app.logger;
-
-  const converter = new _showdown.Converter();
-  converter.setOption("omitExtraWLInCodeBlocks", true);
-  converter.setOption("parseImgDimensions", true);
-  converter.setOption("simplifiedAutoLink", true);
-  converter.setOption("tables", true);
-  converter.setOption("openLinksInNewWindow", true);
-  converter.setOption("emoji", true);
-  converter.setOption("metadata", true);
-  converter.setOption("backslashEscapesHTMLTags", true);
-
   class PostHelper {
     constructor(){
       this.postIndexLoaded = false;
@@ -59,13 +48,15 @@
       });
     };
 
-    clearSelectedPost = () => {
+    clearSelectedPost = (skipRender) => {
       this.currentPostHtml = null;
       this.selectedPost = null;
       this.postMetadata = null;
       this.loadingPost = false;
       this.selectedPostToc = [];
       app.helpers._windowHelper.clearUrlHash();
+
+      if((skipRender || false) === true) return;
       app.instance.render();
     };
 
@@ -79,10 +70,10 @@
         (response) => {
           response.text().then(
             (markdown) => {
-              const generatedHtml = converter.makeHtml(markdown);
+              const generatedHtml = app.helpers._mdHelper.makeHtml(markdown);
               this.loadingPost = false;
               this.currentPostHtml = generatedHtml;
-              this.postMetadata = converter.getMetadata();
+              this.postMetadata = app.helpers._mdHelper.getMetadata();
               this.selectedPostToc = this._generatePostToc(markdown);
               app.instance.render();
               app.helpers._cbHelper.runHighlight();
@@ -100,14 +91,14 @@
       );
     };
 
-    _processPostsIndex = (json) => {
+    _processPostsIndex = (posts) => {
       this.postIndexLoaded = true;
       this.postsIndex = [];
       this.allPosts = [];
       this._postLookup = {};
 
       // Map and sort post entries
-      const mappedPosts = json.posts.map(x => new app.models.Post(x));
+      const mappedPosts = posts.map(x => new app.models.Post(x));
       mappedPosts.sort((a, b) => {
 				// (-) => a,b | (+) => b,a | (0) => same
         if(a.date == b.date) return 0;

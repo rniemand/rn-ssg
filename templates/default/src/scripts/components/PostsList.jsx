@@ -6,7 +6,11 @@
 
 		render() {
 			const postHelper = this.props.postHelper;
+			const pageHelper = this.props.pageHelper;
+			
 			if(postHelper.selectedPost) return null;
+			if(pageHelper.selectedPage) return null;
+
 
 			if (postHelper.allPosts.length === 0) {
 				return (<div>No posts to display</div>);
