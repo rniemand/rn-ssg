@@ -59,6 +59,7 @@
       this.nextPost = null;
       this.prevPost = null;
       app.helpers._windowHelper.clearUrlHash();
+      app.helpers._html.setPageTitle('Home');
 
       if ((skipRender || false) === true) return;
       app.instance.render('PostHelper.clearSelectedPost()');
@@ -86,6 +87,7 @@
               this.currentPostHtml = generatedHtml;
               this.postMetadata = app.helpers._mdHelper.getMetadata();
               this.selectedPostToc = this._generatePostToc(markdown);
+              app.helpers._html.setPageTitle(post.title);
               app.instance.render('PostHelper.loadSelectedPost()');
               app.helpers._cbHelper.runHighlight();
             },

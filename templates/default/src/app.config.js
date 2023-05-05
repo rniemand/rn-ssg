@@ -5,9 +5,9 @@ window.RnSSG = window.RnSSG || {};
     const _generated = {
       baseUrl: window.location.href.replace(window.location.hash, '')
     };
-  
-    if(_generated.baseUrl.endsWith('/'))
-      _generated.baseUrl = _generated.baseUrl.substr(0, _generated.baseUrl.length-1);
+
+    if (_generated.baseUrl.endsWith('/'))
+      _generated.baseUrl = _generated.baseUrl.substr(0, _generated.baseUrl.length - 1);
 
     return _generated;
   };
@@ -28,6 +28,9 @@ window.RnSSG = window.RnSSG || {};
   };
 
   app.config = {
+    blogName: 'RichardN',
+    googleAnalytics: true,
+    googleAnalyticsID: 'G-HRDC8SXRVG',
     generated: createGeneratedConfig(),
     postUrlTemplate: '/post/{id}/{year}/{month}/{title}',
     postUrlRegex: new RegExp('\\/post\\/(\\d{1,})\\/\\d{4}\\/'),

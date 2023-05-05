@@ -1,20 +1,20 @@
 ((app, _window) => {
   class WindowHelper {
     isPostUrl = () => {
-      return app.config.postUrlRegex.test(this._getUrlHash());
+      return app.config.postUrlRegex.test(this.getUrlHash());
     };
 
     isPageUrl = () => {
-      return app.config.pageUrlRegex.test(this._getUrlHash());
+      return app.config.pageUrlRegex.test(this.getUrlHash());
     };
 
     getUrlPostId = () => {
-      const match = app.config.postUrlRegex.exec(this._getUrlHash());
+      const match = app.config.postUrlRegex.exec(this.getUrlHash());
       return match[1];
     };
 
     getUrlPageId = () => {
-      const match = app.config.pageUrlRegex.exec(this._getUrlHash());
+      const match = app.config.pageUrlRegex.exec(this.getUrlHash());
       return match[1];
     };
 
@@ -40,10 +40,9 @@
       _window.location.hash = '';
     };
 
-    // Internal methods
-    _getUrlHash = () => {
+    getUrlHash = () => {
       let hash = _window.location.hash || '';
-      if(hash.startsWith('#')) hash = hash.substring(1);
+      if (hash.startsWith('#')) hash = hash.substring(1);
       return hash;
     };
   }

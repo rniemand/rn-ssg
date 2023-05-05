@@ -22,12 +22,12 @@
             reject(response);
             return;
           }
-          
+
           response.json().then((json) => {
             _logger.info(`Loaded ${response.url}`);
             this._processPages(json);
 
-            if(app.helpers._windowHelper.isPageUrl()) {
+            if (app.helpers._windowHelper.isPageUrl()) {
               this._renderPage(app.helpers._windowHelper.getUrlPageId());
             }
 
@@ -58,6 +58,7 @@
               this.pageLoading = false;
               this.currentPageHtml = generatedHtml;
               this.currentPageMetadata = app.helpers._mdHelper.getMetadata();
+              app.helpers._html.setPageTitle(page.title);
               app.instance.render('PageHelper.loadSelectedPage()');
               app.helpers._cbHelper.runHighlight();
             },
@@ -82,14 +83,14 @@
 
       app.helpers._windowHelper.clearUrlHash();
 
-      if((skipRender || false) === true) return;
+      if ((skipRender || false) === true) return;
       app.instance.render('PageHelper.clearSelectedPage()');
     }
 
     _processPages = (pages) => {
       const processed = [];
 
-      for(const page of pages) {
+      for (const page of pages) {
         page.slug = page.title.toLowerCase()
           .replaceAll(' ', '-')
           .replace(/[^\w-]/gi, "");
@@ -97,13 +98,13 @@
         processed.push(page);
         this.pageLookup[page.id] = page;
       }
-      
+
       this.allPages = processed;
     };
 
     _renderPage = (pageId) => {
       const page = this.pageLookup[pageId];
-      if(!page) {
+      if (!page) {
         // todo: complete this...
         throw new Error(`Need to complete this!`);
       }
