@@ -15,7 +15,6 @@
 
 			let urlSegments = this._getUrlSegments();
 			let title = app.state.layout !== 'archives' ? 'Posts (Latest)' : 'Archives';
-			const onViewPostClickHandler = (post) => { this.props.onPostSelected(post); };
 
 			if (urlSegments.length == 4) {
 				if (urlSegments[3] === 'all') {
@@ -48,11 +47,7 @@
 					</div>
 				)}
 
-				<semanticUIReact.Item.Group divided>
-					{this._getFilteredPosts().map(post => {
-						return (<app.components.PostListEntry key={post.id} post={post} onViewPostClick={onViewPostClickHandler} />);
-					})}
-				</semanticUIReact.Item.Group>
+				<app.components.PostList posts={this._getFilteredPosts()} onPostSelected={this.props.onPostSelected} />
 			</div>);
 		}
 
