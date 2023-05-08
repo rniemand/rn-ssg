@@ -1,12 +1,8 @@
 ((app, _window) => {
   class WindowHelper {
-    isPostUrl = () => {
-      return app.config.postUrlRegex.test(this.getUrlHash());
-    };
+    isPostUrl = () => app.config.postUrlRegex.test(this.getUrlHash());
 
-    isPageUrl = () => {
-      return app.config.pageUrlRegex.test(this.getUrlHash());
-    };
+    isPageUrl = () => app.config.pageUrlRegex.test(this.getUrlHash());
 
     getUrlPostId = () => {
       const match = app.config.postUrlRegex.exec(this.getUrlHash());
@@ -18,26 +14,36 @@
       return match[1];
     };
 
+    getSelectedUrlTag = () => {
+      if (!app.config.getTagRegex.test(this.getUrlHash())) return '';
+      const match = app.config.getTagRegex.exec(this.getUrlHash());
+      const matchValue = match[app.config.getTagIndex || 0] || '';
+      return decodeURI(matchValue);
+    };
+
     setCustomPageUrl = (url) => {
       _window.location.hash = url;
     };
 
     setActivePostUrl = (post) => {
-      const postUrlSegment = app.config.postUrlTemplate
+      _window.location.hash = app.config.postUrlTemplate
         .replace('{id}', post.id)
         .replace('{year}', post.postYear)
         .replace('{month}', post.postMonth)
         .replace('{title}', encodeURI(post.slug));
-
-      _window.location.hash = postUrlSegment;
     };
 
     setActivePageUrl = (page) => {
-      const pageUrlSegment = app.config.pageUrlTemplate
+      _window.location.hash = app.config.pageUrlTemplate
         .replace('{id}', page.id)
         .replace('{title}', encodeURI(page.slug));
+    };
 
-      _window.location.hash = pageUrlSegment;
+    setSelectedTagUrl = (page, tag) => {
+      _window.location.hash = app.config.pageTagUrlTemplate
+        .replace('{id}', page.id)
+        .replace('{title}', encodeURI(page.slug))
+        .replace('{tag}', encodeURI(tag));
     };
 
     clearUrlHash = () => {

@@ -129,6 +129,20 @@
       app.instance.render('PostHelper.listPosts()');
     };
 
+    getFilteredPosts = (filter) => {
+      const tagFilter = filter?.tag || '';
+      const tags = tagFilter.length > 0 ? [tagFilter] : (filter.tags || []);
+      const filterOnTag = tags.length > 0;
+
+      return this.allPosts.filter(post => {
+        if (filterOnTag) {
+          if (!this._containsTags(post, tags)) return false;
+        }
+
+        return true;
+      });
+    };
+
     _processPostsIndex = (posts) => {
       this.postIndexLoaded = true;
       this.postsIndex = [];
@@ -214,6 +228,15 @@
       }
 
       return toc;
+    };
+
+    _containsTags = (post, tags) => {
+      for (let i = 0; i < tags.length; i++) {
+        if (post.tags.indexOf(tags[i]) > -1) continue;
+        return false;
+      }
+
+      return true;
     };
   }
 

@@ -40,6 +40,9 @@ window.RnSSG = window.RnSSG || {};
     postUrlRegex: new RegExp('\\/post\\/(\\d{1,})\\/\\d{4}\\/'),
     pageUrlTemplate: '/page/{id}/{title}',
     pageUrlRegex: new RegExp('\\/page\\/(\\d{1,})\\/'),
+    getTagRegex: new RegExp('\\/page\\/(\\d{1,})\\/[^\\/]+\\/(.*?)$'),
+    getTagIndex: 2,
+    pageTagUrlTemplate: '/page/{id}/{title}/{tag}',
     logging: {
       enabled: true,
       logFetch: false,
