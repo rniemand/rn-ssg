@@ -26,25 +26,16 @@
 
       return (
         <div className="rnssg">
-          <table className="main">
-            <tbody>
-              <tr>
-                <td colSpan={2}>
-                  <app.components.PageNav pageHelper={pageHelper} onPageSelected={onPageSelectedHandler} />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <app.components.PostArchiveList postHelper={postHelper} onPostSelected={onPostSelectedHandler} onListPostsClick={onListPostsClickHandler} />
-                </td>
-                <td>
-                  <app.components.CurrentPage pageHelper={pageHelper} />
-                  <app.components.PostsList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
-                  <app.components.CurrentPost postHelper={postHelper} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <semanticUIReact.Container>
+            <app.components.PageNav pageHelper={pageHelper} onPageSelected={onPageSelectedHandler} />
+          </semanticUIReact.Container>
+
+          <semanticUIReact.Container className="main">
+            <app.components.CurrentPage pageHelper={pageHelper} />
+            <app.components.Categories postHelper={postHelper} />
+            <app.components.PostsList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
+            <app.components.CurrentPost postHelper={postHelper} />
+          </semanticUIReact.Container>
         </div>
       );
     }

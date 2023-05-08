@@ -50,6 +50,7 @@
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
       app.state.currentMode = 'page';
+      app.state.layout = 'default';
 
       fetch(page.path).then(
         (response) => {
@@ -59,6 +60,11 @@
               this.pageLoading = false;
               this.currentPageHtml = generatedHtml;
               this.currentPageMetadata = app.helpers._mdHelper.getMetadata();
+
+              if ((this.currentPageMetadata.layout?.length ?? 0) > 0) {
+                app.state.layout = this.currentPageMetadata.layout;
+              }
+
               app.helpers._html.setPageTitle(page.title);
               app.instance.render('PageHelper.loadSelectedPage()');
               app.helpers._cbHelper.runHighlight();

@@ -11,6 +11,7 @@
       this.tags = postJson.tags;
       this.author = postJson.author;
       this.id = postJson.id;
+      this.categories = postJson.categories;
       this.slug = postJson.title.toLowerCase()
         .replaceAll(' ', '-')
         .replace(/[^\w-]/gi, "");

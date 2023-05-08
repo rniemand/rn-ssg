@@ -17,7 +17,8 @@ window.RnSSG = window.RnSSG || {};
   app.enums = {};
   app.models = {};
   app.state = {
-    currentMode: 'home'
+    currentMode: 'home',
+    layout: 'default'
   };
   app.instance = null;
 

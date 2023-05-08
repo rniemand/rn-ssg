@@ -19,6 +19,9 @@ class BlogPostListEntry
   [JsonProperty("tags")]
   public string[] Tags { get; set; } = Array.Empty<string>();
 
+  [JsonProperty("categories")]
+  public string[] Categories { get; set; } = Array.Empty<string>();
+
   [JsonProperty("author")]
   public string Author { get; set; } = string.Empty;
   // todo: add support for author metadata

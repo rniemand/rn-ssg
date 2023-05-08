@@ -14,6 +14,7 @@
       this.selectedPostToc = [];
       this.nextPost = null;
       this.prevPost = null;
+      this.categories = {};
     };
 
     loadPostsIndex = () => {
@@ -81,6 +82,7 @@
       app.helpers._windowHelper.setActivePostUrl(post);
       app.instance.render('PostHelper.loadSelectedPost()');
       app.state.currentMode = 'post';
+      app.state.layout = 'default';
 
       // set prev/next post
       const curPostIndex = this.allPosts.indexOf(post);
@@ -129,6 +131,7 @@
       this.postsIndex = [];
       this.allPosts = [];
       this._postLookup = {};
+      this.categories = [];
 
       // Map and sort post entries
       const mappedPosts = posts.map(x => new app.models.Post(x));
@@ -142,15 +145,21 @@
       // Generate post year object
       const postYearAggr = {};
       const allPosts = [];
+      const postCategories = {};
       for (const post of mappedPosts) {
         if (postYearAggr[post.postYear] === void 0) postYearAggr[post.postYear] = {};
         if (postYearAggr[post.postYear][post.postMonth] === void 0) postYearAggr[post.postYear][post.postMonth] = [];
         postYearAggr[post.postYear][post.postMonth].push(post);
         allPosts.push(post);
         this._postLookup[post.id] = post;
+        post.categories.forEach(cat => {
+          if (postCategories[cat] === void 0) postCategories[cat] = { name: cat, postCount: 0 };
+          postCategories[cat].postCount += 1;
+        });
       }
 
       this.postsIndex = postYearAggr;
+      this.categories = postCategories;
       this.allPosts = allPosts.reverse();
     };
 

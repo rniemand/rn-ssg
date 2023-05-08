@@ -73,7 +73,8 @@ class BlogPostHelper : IBlogPostHelper
         Tags = postFile.Metadata.Tags,
         // todo: use the correct author here
         Author = "Richard Niemand",
-        Id = postId++
+        Id = postId++,
+        Categories = postFile.Metadata.Categories
       })
       .ToList();
   }
