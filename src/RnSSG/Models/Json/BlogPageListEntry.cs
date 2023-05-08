@@ -13,6 +13,9 @@ class BlogPageListEntry
   [JsonProperty("path")]
   public string Path { get; set; } = string.Empty;
 
+  [JsonProperty("layout")]
+  public string Layout { get; set; } = string.Empty;
+
   [JsonProperty("order")]
   public int Order { get; set; }
 }

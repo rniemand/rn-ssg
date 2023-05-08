@@ -1,5 +1,5 @@
 ((app) => {
-  class CurrentPage extends React.Component {
+  class ViewPage extends React.Component {
     constructor(props) {
       super(props);
     }
@@ -19,5 +19,5 @@
     }
   }
 
-  app.components.CurrentPage = CurrentPage;
+  app.components.ViewPage = ViewPage;
 })(RnSSG);

@@ -49,8 +49,7 @@
       this.selectedPage = page;
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
-      app.state.currentMode = 'page';
-      app.state.layout = 'default';
+      app.state.layout = 'page';
 
       fetch(page.path).then(
         (response) => {
@@ -88,7 +87,7 @@
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
       app.helpers._windowHelper.clearUrlHash();
-      app.state.currentMode = 'home';
+      app.state.layout = 'posts';
 
       if ((skipRender || false) === true) return;
       app.instance.render('PageHelper.clearSelectedPage()');
@@ -97,11 +96,8 @@
     _processPages = (pages) => {
       const processed = [];
 
-      for (const page of pages) {
-        page.slug = page.title.toLowerCase()
-          .replaceAll(' ', '-')
-          .replace(/[^\w-]/gi, "");
-
+      for (const pageJson of pages) {
+        const page = new app.models.Page(pageJson);
         processed.push(page);
         this.pageLookup[page.id] = page;
       }

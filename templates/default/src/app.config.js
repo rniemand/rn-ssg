@@ -18,7 +18,7 @@ window.RnSSG = window.RnSSG || {};
   app.models = {};
   app.state = {
     currentMode: 'home',
-    layout: 'default'
+    layout: 'posts'
   };
   app.instance = null;
 

@@ -1,5 +1,5 @@
 ((app) => {
-  class PostArchiveList extends React.Component {
+  class ViewArchives extends React.Component {
     constructor(props) {
       super(props);
     }
@@ -29,5 +29,5 @@
     }
   }
 
-  app.components.PostArchiveList = PostArchiveList;
+  app.components.ViewArchives = ViewArchives;
 })(RnSSG);

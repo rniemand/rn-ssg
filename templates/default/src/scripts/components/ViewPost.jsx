@@ -1,5 +1,5 @@
 ((app) => {
-  class CurrentPost extends React.Component {
+  class ViewPost extends React.Component {
     constructor(props) {
       super(props);
     }
@@ -22,5 +22,5 @@
     }
   }
 
-  app.components.CurrentPost = CurrentPost;
+  app.components.ViewPost = ViewPost;
 })(RnSSG);

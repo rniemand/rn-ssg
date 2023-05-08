@@ -1,5 +1,5 @@
 ((app) => {
-  class Categories extends React.Component {
+  class ViewCategories extends React.Component {
     constructor(props) {
       super(props);
     }
@@ -23,5 +23,5 @@
     }
   }
 
-  app.components.Categories = Categories;
+  app.components.ViewCategories = ViewCategories;
 })(RnSSG);

@@ -46,6 +46,10 @@
         .replace('{tag}', encodeURI(tag));
     };
 
+    setPostsUrl = () => {
+      _window.location.hash = '/posts';
+    };
+
     clearUrlHash = () => {
       _window.location.hash = '';
     };

@@ -5,11 +5,7 @@
 		}
 
 		render() {
-			if (
-				app.state.currentMode !== 'home' &&
-				app.state.currentMode !== 'post-list' &&
-				app.state.layout !== 'archives'
-			) return null;
+			if (app.state.layout !== 'archives') return null;
 
 			const postHelper = this.props.postHelper;
 

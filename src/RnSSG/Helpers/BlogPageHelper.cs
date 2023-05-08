@@ -68,7 +68,8 @@ class BlogPageHelper : IBlogPageHelper
         Title = pageFile.FileName,
         Id = pageId++,
         Order = pageFile.Metadata.Order,
-        Path = $"/_tabs{pageFile.RelativePath}"
+        Path = $"/_tabs{pageFile.RelativePath}",
+        Layout = pageFile.Metadata.Layout,
       })
       .ToList();
   }
@@ -88,6 +89,7 @@ class BlogPageHelper : IBlogPageHelper
 
     mapped.Icon = metadata.GetStringValue("icon", string.Empty);
     mapped.Order = metadata.GetIntValue("order", 0);
+    mapped.Layout = metadata.GetStringValue("layout", "page");
 
     return mapped;
   }

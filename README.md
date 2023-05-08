@@ -62,4 +62,5 @@ Placeholder for now...
 - Add additional plugins for prism
 - Sort out ' quotes in post titles extracted from metadata
 - fix `shelll` in Installing MariaDB (MySQL) on Ubuntu
+- Promote layout from metadata to pages JSON file
 - 

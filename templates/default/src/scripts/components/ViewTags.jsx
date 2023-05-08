@@ -1,5 +1,5 @@
 ((app) => {
-  class Tags extends React.Component {
+  class ViewTags extends React.Component {
     constructor(props) {
       super(props);
     }
@@ -36,5 +36,5 @@
     }
   }
 
-  app.components.Tags = Tags;
+  app.components.ViewTags = ViewTags;
 })(RnSSG);

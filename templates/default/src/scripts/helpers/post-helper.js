@@ -62,16 +62,9 @@
       this.selectedPostToc = [];
       this.nextPost = null;
       this.prevPost = null;
+      app.state.layout = 'posts';
 
-      if (app.state.currentMode === 'post') {
-        app.state.currentMode = 'post-list';
-        app.helpers._html.setPageTitle('Posts List');
-        app.helpers._windowHelper.setCustomPageUrl('/posts');
-      } else {
-        app.state.currentMode = 'home';
-        app.helpers._html.setPageTitle('Home');
-        app.helpers._windowHelper.clearUrlHash();
-      }
+      app.helpers._windowHelper.setPostsUrl();
 
       if ((skipRender || false) === true) return;
       app.instance.render('PostHelper.clearSelectedPost()');
@@ -84,8 +77,7 @@
       this.prevPost = null;
       app.helpers._windowHelper.setActivePostUrl(post);
       app.instance.render('PostHelper.loadSelectedPost()');
-      app.state.currentMode = 'post';
-      app.state.layout = 'default';
+      app.state.layout = 'post';
 
       // set prev/next post
       const curPostIndex = this.allPosts.indexOf(post);
@@ -123,7 +115,7 @@
       if (year) url += `/${year}`;
       if (month) url += `/${month}`;
 
-      app.state.currentMode = 'post-list';
+      app.state.layout = 'posts';
       app.helpers._html.setPageTitle('Posts List');
       app.helpers._windowHelper.setCustomPageUrl(url);
       app.instance.render('PostHelper.listPosts()');
