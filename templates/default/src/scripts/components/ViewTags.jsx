@@ -5,7 +5,6 @@
     }
 
     render() {
-      if (app.state.layout !== 'tags') return null;
       const postHelper = this.props.postHelper;
       const pageHelper = this.props.pageHelper;
       const selectedTag = app.helpers._windowHelper.getSelectedUrlTag();

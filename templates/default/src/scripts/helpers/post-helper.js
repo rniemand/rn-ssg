@@ -63,7 +63,6 @@
       this.nextPost = null;
       this.prevPost = null;
       app.state.layout = 'posts';
-
       app.helpers._windowHelper.setPostsUrl();
 
       if ((skipRender || false) === true) return;

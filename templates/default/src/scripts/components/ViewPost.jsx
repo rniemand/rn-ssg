@@ -7,7 +7,13 @@
     render() {
       const postHelper = this.props.postHelper;
       const postHtml = postHelper.currentPostHtml;
-      if (!postHtml) return null;
+
+      if (!postHtml) {
+        return (<div>
+          <h1>Error rendering post</h1>
+          <p>Something went wrong with rendering this post entry.</p>
+        </div>)
+      }
 
       return (<div className="post">
         {postHelper.prevPost && <button onClick={() => postHelper.loadSelectedPost(postHelper.prevPost)}>&lt; Prev Post</button>}

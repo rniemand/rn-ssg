@@ -5,7 +5,6 @@
     }
 
     render() {
-      if (app.state.layout !== 'categories') return null;
       const postHelper = this.props.postHelper;
 
       return (<div className="post-categories">
