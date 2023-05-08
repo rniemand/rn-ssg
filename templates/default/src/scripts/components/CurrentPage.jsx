@@ -9,6 +9,7 @@
       if (!pageHelper.selectedPage) return null;
       if (app.state.layout === 'archives') return null;
       if (app.state.layout === 'categories') return null;
+      if (app.state.layout === 'tags') return null;
 
       return (<div className="page">
         <button onClick={pageHelper.clearSelectedPage}>Post list</button>

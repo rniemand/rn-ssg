@@ -8,12 +8,17 @@
       if (app.state.layout !== 'categories') return null;
       const postHelper = this.props.postHelper;
 
-      return (<div className="page">
-        <ul>
-          {Object.keys(postHelper.categories).map(cat => {
-            return (<li key={cat}>{cat} ({postHelper.categories[cat].postCount} posts)</li>);
-          })}
-        </ul>
+      return (<div className="post-categories">
+        <h2>Categories</h2>
+        {postHelper.categoryNames.map(cat => {
+          return (<semanticUIReact.Label key={cat} className="category">
+            <semanticUIReact.Icon name='folder open' />
+            {cat}
+            <semanticUIReact.Label.Detail>
+              {postHelper.categories[cat].postCount}
+            </semanticUIReact.Label.Detail>
+          </semanticUIReact.Label>);
+        })}
       </div>);
     }
   }

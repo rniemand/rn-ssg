@@ -15,6 +15,9 @@
       this.nextPost = null;
       this.prevPost = null;
       this.categories = {};
+      this.categoryNames = [];
+      this.tags = {};
+      this.tagNames = [];
     };
 
     loadPostsIndex = () => {
@@ -131,7 +134,10 @@
       this.postsIndex = [];
       this.allPosts = [];
       this._postLookup = {};
-      this.categories = [];
+      this.categories = {};
+      this.categoryNames = [];
+      this.tags = {};
+      this.tagNames = [];
 
       // Map and sort post entries
       const mappedPosts = posts.map(x => new app.models.Post(x));
@@ -146,20 +152,34 @@
       const postYearAggr = {};
       const allPosts = [];
       const postCategories = {};
+      const postTags = {};
       for (const post of mappedPosts) {
         if (postYearAggr[post.postYear] === void 0) postYearAggr[post.postYear] = {};
         if (postYearAggr[post.postYear][post.postMonth] === void 0) postYearAggr[post.postYear][post.postMonth] = [];
         postYearAggr[post.postYear][post.postMonth].push(post);
         allPosts.push(post);
         this._postLookup[post.id] = post;
+
         post.categories.forEach(cat => {
           if (postCategories[cat] === void 0) postCategories[cat] = { name: cat, postCount: 0 };
           postCategories[cat].postCount += 1;
         });
+
+        post.tags.forEach(tag => {
+          if (postTags[tag] === void 0) postTags[tag] = { name: tag, postCount: 0 }
+          postTags[tag].postCount += 1;
+        });
       }
 
-      this.postsIndex = postYearAggr;
       this.categories = postCategories;
+      this.categoryNames = Object.keys(postCategories);
+      this.categoryNames.sort();
+
+      this.tags = postTags;
+      this.tagNames = Object.keys(postTags);
+      this.tagNames.sort();
+
+      this.postsIndex = postYearAggr;
       this.allPosts = allPosts.reverse();
     };
 

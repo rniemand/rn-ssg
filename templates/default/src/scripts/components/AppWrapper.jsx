@@ -31,8 +31,9 @@
           </semanticUIReact.Container>
 
           <semanticUIReact.Container className="main">
-            <app.components.CurrentPage pageHelper={pageHelper} />
             <app.components.Categories postHelper={postHelper} />
+            <app.components.Tags postHelper={postHelper} />
+            <app.components.CurrentPage pageHelper={pageHelper} />
             <app.components.PostsList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />
             <app.components.CurrentPost postHelper={postHelper} />
           </semanticUIReact.Container>

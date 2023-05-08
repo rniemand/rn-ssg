@@ -33,7 +33,7 @@ window.RnSSG = window.RnSSG || {};
 
   app.config = {
     blogName: 'RichardN',
-    googleAnalytics: true,
+    googleAnalytics: false,
     googleAnalyticsID: 'G-HRDC8SXRVG',
     generated: createGeneratedConfig(),
     postUrlTemplate: '/post/{id}/{year}/{month}/{title}',
