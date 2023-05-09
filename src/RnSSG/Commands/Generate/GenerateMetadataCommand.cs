@@ -62,7 +62,7 @@ class GenerateMetadataCommand
   private void GeneratePostsList(RnSsgConfig config)
   {
     var postFiles = _blogPostHelper.GetBlogPostFiles(config);
-    var postListEntries = _blogPostHelper.MapBlogPostList(postFiles);
+    var postListEntries = _blogPostHelper.MapBlogPostList(config, postFiles);
     _blogPostHelper.WritePostsJsonFile(config, postListEntries);
   }
 

@@ -11,7 +11,7 @@ interface IBlogPostHelper
 {
   List<BlogPostFile> GetBlogPostFiles(RnSsgConfig config);
   BlogPostFile MapBlogPostFile(RnSsgConfig config, string filePath);
-  List<BlogPostListEntry> MapBlogPostList(List<BlogPostFile> posts);
+  List<BlogPostListEntry> MapBlogPostList(RnSsgConfig config, List<BlogPostFile> posts);
   void WritePostsJsonFile(RnSsgConfig config, List<BlogPostListEntry> posts);
 }
 
@@ -55,12 +55,12 @@ class BlogPostHelper : IBlogPostHelper
     var relativePath = filePath[config.PostsDir.Length..].Replace("\\", "/");
     var fileName = _path.GetFileNameWithoutExtension(filePath)!;
     var rawMetadata = _mdHelper.ExtractRawMetadata(filePath);
-    var metadata = MapMetadata(filePath, rawMetadata);
+    var metadata = MapMetadata(config, filePath, rawMetadata);
 
     return new BlogPostFile(filePath, relativePath, fileName, metadata);
   }
 
-  public List<BlogPostListEntry> MapBlogPostList(List<BlogPostFile> posts)
+  public List<BlogPostListEntry> MapBlogPostList(RnSsgConfig config, List<BlogPostFile> posts)
   {
     var postId = 1;
     return posts
@@ -71,8 +71,7 @@ class BlogPostHelper : IBlogPostHelper
         Date = postFile.Metadata.DateTimeOffset,
         Description = "nothing to see",
         Tags = postFile.Metadata.Tags,
-        // todo: use the correct author here
-        Author = "Richard Niemand",
+        Author = postFile.Metadata.Author,
         Id = postId++,
         Categories = postFile.Metadata.Categories
       })
@@ -87,7 +86,7 @@ class BlogPostHelper : IBlogPostHelper
     _file.WriteAllText(targetFile, blogPostListJson);
   }
 
-  private BlogPostMetadata MapMetadata(string filePath, string rawMetadata)
+  private BlogPostMetadata MapMetadata(RnSsgConfig config, string filePath, string rawMetadata)
   {
     var mapped = new BlogPostMetadata();
     var metadata = _mdHelper.MapMetadataDictionary(filePath, rawMetadata);
@@ -97,6 +96,7 @@ class BlogPostHelper : IBlogPostHelper
     mapped.Categories = metadata.GetStringArray("categories");
     mapped.Tags = metadata.GetStringArray("tags");
     mapped.TableOfContents = metadata.GetBoolValue("toc", false);
+    mapped.Author = metadata.GetStringValue("author", config.DefaultAuthor);
 
     return mapped;
   }

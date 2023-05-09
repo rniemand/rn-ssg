@@ -48,7 +48,6 @@ Placeholder for now...
 
 - Fix post archive styling
 - Fix table of contents on active blog post
-- Add concept of default author
 - Rewrite documenation for CLI
 - Fix table styling
 - Fix image rendering logic (perhaps add a modal for more information)
@@ -62,4 +61,5 @@ Placeholder for now...
 - Sort out ' quotes in post titles extracted from metadata
 - fix `shelll` in Installing MariaDB (MySQL) on Ubuntu
 - Promote layout from metadata to pages JSON file
+- Ability to list posts by a specific author
 - 

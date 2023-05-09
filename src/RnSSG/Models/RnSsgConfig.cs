@@ -24,4 +24,7 @@ class RnSsgConfig
 
   [JsonIgnore]
   public string PagesDir { get; set; } = string.Empty;
+
+  [JsonProperty("defaultAuthor")]
+  public string DefaultAuthor { get; set; } = string.Empty;
 }

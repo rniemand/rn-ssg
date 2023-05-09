@@ -16,6 +16,8 @@
           </semanticUIReact.Item.Header>
           <semanticUIReact.Item.Meta>
             <span className='date'>{dateFormatted}</span>
+            by
+            <span className="author">{post.author}</span>
           </semanticUIReact.Item.Meta>
           <semanticUIReact.Item.Extra>
             <app.components.PostListEntryTags tags={post.tags} />
