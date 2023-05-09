@@ -24,10 +24,10 @@
 				}
 			}
 
-			return (<div className="post-list">
+			return (<div className="posts-list-filter">
 				<h1>{title}</h1>
 
-				<div className="bc-filter">
+				<div className="bc">
 					<ul>
 						<li key='latest' onClick={postHelper.clearSelectedPost}>Latest</li>
 						{Object.keys(postHelper.postsIndex).map(year => {
@@ -37,7 +37,7 @@
 				</div>
 
 				{urlSegments.length === 4 && urlSegments[3] !== 'add' && (
-					<div className="bc-filter">
+					<div className="bc">
 						<ul>
 							<li key='all' onClick={() => postHelper.listPosts(urlSegments[2], 'all')}>All</li>
 							{Object.keys(postHelper.postsIndex[urlSegments[2]]).map(month => {

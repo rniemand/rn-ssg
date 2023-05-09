@@ -15,7 +15,7 @@
         return 1;
       });
 
-      return (<semanticUIReact.Item.Group divided>
+      return (<semanticUIReact.Item.Group divided className="posts-list">
         {posts.map(post => {
           return (<app.components.PostListEntry key={post.id} post={post} onPostSelected={() => this.props.onPostSelected(post)} />);
         })}
