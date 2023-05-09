@@ -6,12 +6,8 @@
 
 		render() {
 			const postHelper = this.props.postHelper;
-
-			if (postHelper.allPosts.length === 0)
-				return (<div>No posts to display</div>);
-
-			if (postHelper.loadingPost)
-				return (<div>Loading selected post</div>);
+			if (postHelper.allPosts.length === 0) return (<div>No posts to display</div>);
+			if (postHelper.loadingPost) return (<div>Loading selected post</div>);
 
 			let urlSegments = this._getUrlSegments();
 			let title = app.state.layout !== 'archives' ? 'Posts (Latest)' : 'Archives';
@@ -60,6 +56,11 @@
 		}
 
 		_getUrlSegments = () => {
+			const urlHash = app.helpers._windowHelper.getUrlHash();
+			const postsHash = app.helpers._urlHelper.generateSpecialPageUrl('posts');
+
+			if (urlHash == postsHash) return [];
+
 			let urlSegments = app.helpers._windowHelper.getUrlHash().split('/');
 
 			if (app.state.layout === 'archives') {

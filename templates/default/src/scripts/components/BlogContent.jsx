@@ -13,12 +13,13 @@
         postHelper.loadSelectedPost(post);
       };
 
+      app.logger.debug(`Current page layout: ${app.state.layout}`);
       switch (app.state.layout.toLowerCase()) {
         case 'page': return (<app.components.ViewPage pageHelper={pageHelper} />);
         case 'post': return (<app.components.ViewPost postHelper={postHelper} />);
+        case 'posts': return (<app.components.ViewPostList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />);
         case 'categories': return (<app.components.ViewCategories postHelper={postHelper} pageHelper={pageHelper} onPostSelected={onPostSelectedHandler} />);
         case 'tags': return (<app.components.ViewTags postHelper={postHelper} pageHelper={pageHelper} onPostSelected={onPostSelectedHandler} />);
-        case 'posts': return (<app.components.ViewPostList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />);
         case 'archives': return (<app.components.ViewPostList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />);
 
         default: return (<div>

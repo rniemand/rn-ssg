@@ -17,14 +17,9 @@
       }
 
       const onPageSelectedHandler = (page) => {
-        if (page.layout === 'posts') {
-          pageHelper.clearSelectedPage(true);
-          postHelper.clearSelectedPost();
-        }
-        else {
-          postHelper.clearSelectedPost(true);
-          pageHelper.loadSelectedPage(page);
-        }
+        postHelper.clearSelectedPost(true);
+        pageHelper.clearSelectedPage(true);
+        pageHelper.loadSelectedPage(page);
       };
 
       return (<semanticUIReact.Container>

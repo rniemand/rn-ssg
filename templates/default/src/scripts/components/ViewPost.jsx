@@ -8,6 +8,11 @@
       const postHelper = this.props.postHelper;
       const postHtml = postHelper.currentPostHtml;
 
+      const postListHandler = () => {
+        postHelper.clearSelectedPost();
+        app.helpers._urlHelper.setPostsUrl();
+      }
+
       if (!postHtml) {
         return (<div>
           <h1>Error rendering post</h1>
@@ -18,7 +23,7 @@
       return (<div className="post">
         {postHelper.prevPost && <button onClick={() => postHelper.loadSelectedPost(postHelper.prevPost)}>&lt; Prev Post</button>}
         &nbsp;
-        <button onClick={postHelper.clearSelectedPost}>Post list</button>
+        <button onClick={postListHandler}>Post list</button>
         &nbsp;
         {postHelper.nextPost && <button onClick={() => postHelper.loadSelectedPost(postHelper.nextPost)}>Next Post &gt;</button>}
         <app.components.PostHeader post={postHelper.selectedPost} metadata={postHelper.postMetadata} />

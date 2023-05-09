@@ -11,6 +11,10 @@
         .replaceAll(' ', '-')
         .replace(/[^\w-]/gi, "");
     }
+
+    formatString = (template) => template
+      .replace('{id}', this.id)
+      .replace('{title}', encodeURI(this.slug));
   }
 
   app.models.Page = Page;

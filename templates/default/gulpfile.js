@@ -1,14 +1,11 @@
 const { series, src, dest, watch, parallel } = require("gulp");
 const inlinesource = require("gulp-inline-source");
 const path = require("path");
-const execSync = require("child_process").execSync;
-const gulpCopy = require("gulp-copy");
 const concat = require("gulp-concat");
 const babel = require("gulp-babel");
 const clean = require("gulp-clean");
 var less = require("gulp-less");
-
-const EXPORT_DIST_DIR = path.join(__dirname, "dist");
+var sourcemaps = require('gulp-sourcemaps');
 
 const watchPaths = [
   "./src/scripts/**/*.js",
@@ -27,6 +24,7 @@ function generateJs() {
     "./src/scripts/**/*.jsx",
     "./src/app.bootstrap.js",
   ])
+    .pipe(sourcemaps.init())
     .pipe(concat("ui.js"))
     .pipe(
       babel({
@@ -35,6 +33,7 @@ function generateJs() {
         sourceType: "module",
       })
     )
+    .pipe(sourcemaps.write())
     .pipe(dest("./dist"));
 }
 

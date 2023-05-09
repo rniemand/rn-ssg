@@ -62,8 +62,6 @@
       this.selectedPostToc = [];
       this.nextPost = null;
       this.prevPost = null;
-      app.state.layout = 'posts';
-      app.helpers._windowHelper.setPostsUrl();
 
       if ((skipRender || false) === true) return;
       app.instance.render('PostHelper.clearSelectedPost()');
@@ -74,7 +72,7 @@
       this.selectedPost = post;
       this.nextPost = null;
       this.prevPost = null;
-      app.helpers._windowHelper.setActivePostUrl(post);
+      app.helpers._urlHelper.setActivePostUrl(post);
       app.instance.render('PostHelper.loadSelectedPost()');
       app.state.layout = 'post';
 

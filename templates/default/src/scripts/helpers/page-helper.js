@@ -46,10 +46,11 @@
 
     loadSelectedPage = (page) => {
       this.pageLoading = true;
-      app.helpers._windowHelper.setActivePageUrl(page);
+      app.helpers._urlHelper.setActivePageUrl(page);
       this.selectedPage = page;
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
+      app.logger.info(`Loading page: ${page.path}`);
       app.state.layout = 'page';
 
       fetch(page.path).then(
@@ -63,6 +64,7 @@
 
               if ((this.currentPageMetadata.layout?.length ?? 0) > 0) {
                 app.state.layout = this.currentPageMetadata.layout;
+                app.logger.debug(`Setting page layout to: ${app.state.layout}`);
               }
 
               app.helpers._html.setPageTitle(page.title);
@@ -88,8 +90,6 @@
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
       app.helpers._windowHelper.clearUrlHash();
-      app.state.layout = 'posts';
-
       if ((skipRender || false) === true) return;
       app.instance.render('PageHelper.clearSelectedPage()');
     };

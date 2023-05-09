@@ -13,8 +13,7 @@
       });
 
       const onCategoryClick = (cat) => {
-        app.helpers._windowHelper.setSelectedCategoryUrl(pageHelper.selectedPage, cat);
-        app.instance.render('ViewCategories.onTagClick()');
+        app.helpers._urlHelper.setSelectedCategoryUrl(cat, pageHelper.selectedPage);
       };
 
       const clearCategoryClick = () => {

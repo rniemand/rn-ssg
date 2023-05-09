@@ -32,35 +32,7 @@
       _window.location.hash = url;
     };
 
-    setActivePostUrl = (post) => {
-      _window.location.hash = app.config.postUrlTemplate
-        .replace('{id}', post.id)
-        .replace('{year}', post.postYear)
-        .replace('{month}', post.postMonth)
-        .replace('{title}', encodeURI(post.slug));
-    };
 
-    setActivePageUrl = (page) => {
-      _window.location.hash = app.config.pageUrlTemplate
-        .replace('{id}', page.id)
-        .replace('{title}', encodeURI(page.slug));
-    };
-
-    setSelectedTagUrl = (tag, page) => {
-      if (!page) page = app.globals.pageHelper.special.tags;
-
-      _window.location.hash = app.config.pageTagUrlTemplate
-        .replace('{id}', page.id)
-        .replace('{title}', encodeURI(page.slug))
-        .replace('{tag}', encodeURI(tag));
-    };
-
-    setSelectedCategoryUrl = (page, category) => {
-      _window.location.hash = app.config.pageTagUrlTemplate
-        .replace('{id}', page.id)
-        .replace('{title}', encodeURI(page.slug))
-        .replace('{tag}', encodeURI(category));
-    };
 
     setPostsUrl = () => {
       _window.location.hash = '/posts';
@@ -68,6 +40,7 @@
 
     clearUrlHash = () => {
       _window.location.hash = '';
+
     };
 
     getUrlHash = () => {

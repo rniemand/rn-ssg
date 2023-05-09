@@ -13,8 +13,7 @@
       });
 
       const onTagClick = (tag) => {
-        app.helpers._windowHelper.setSelectedTagUrl(tag, pageHelper.selectedPage);
-        app.instance.render('ViewTags.onTagClick()');
+        app.helpers._urlHelper.setSelectedTagUrl(tag, pageHelper.selectedPage);
       };
 
       const clearTagClick = () => {

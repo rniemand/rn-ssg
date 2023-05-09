@@ -16,6 +16,12 @@
         .replaceAll(' ', '-')
         .replace(/[^\w-]/gi, "");
     }
+
+    formatString = (template) => template
+      .replace('{id}', this.id)
+      .replace('{year}', this.postYear)
+      .replace('{month}', this.postMonth)
+      .replace('{title}', encodeURI(this.slug));
   }
 
   app.models.Post = Post;

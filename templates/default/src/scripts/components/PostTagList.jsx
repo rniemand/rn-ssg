@@ -9,9 +9,7 @@
 			if (tags.length === 0) return null;
 
 			const showTags = (tag) => {
-				app.helpers._windowHelper.setSelectedTagUrl(tag);
-				app.state.layout = 'tags';
-				app.instance.render('PostTagList.showTags()');
+				app.helpers._urlHelper.setSelectedTagUrl(tag);
 			};
 
 			return (<div className="post-tag-list">
