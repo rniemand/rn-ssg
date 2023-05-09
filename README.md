@@ -48,7 +48,6 @@ Placeholder for now...
 
 - Fix post archive styling
 - Fix table of contents on active blog post
-- Order page links based on metadata
 - Add concept of default author
 - Rewrite documenation for CLI
 - Fix table styling

@@ -65,7 +65,7 @@ class BlogPageHelper : IBlogPageHelper
     return pages
       .Select(pageFile => new BlogPageListEntry
       {
-        Title = pageFile.FileName,
+        Title = string.IsNullOrWhiteSpace(pageFile.Metadata.Title) ? pageFile.FileName : pageFile.Metadata.Title,
         Id = pageId++,
         Order = pageFile.Metadata.Order,
         Path = $"/_tabs{pageFile.RelativePath}",
@@ -90,6 +90,7 @@ class BlogPageHelper : IBlogPageHelper
     mapped.Icon = metadata.GetStringValue("icon", string.Empty);
     mapped.Order = metadata.GetIntValue("order", 0);
     mapped.Layout = metadata.GetStringValue("layout", "page");
+    mapped.Title = metadata.GetStringValue("title", string.Empty);
 
     return mapped;
   }
