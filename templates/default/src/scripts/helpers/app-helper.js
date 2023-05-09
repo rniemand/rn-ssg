@@ -8,6 +8,8 @@
       this._renderFn = renderFn;
       this.postHelper = new app.helpers.PostHelper();
       this.pageHelper = new app.helpers.PageHelper();
+      app.globals.postHelper = this.postHelper;
+      app.globals.pageHelper = this.pageHelper;
 
       this._runInit();
     };

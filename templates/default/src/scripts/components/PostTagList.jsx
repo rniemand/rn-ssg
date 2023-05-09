@@ -5,19 +5,22 @@
 		}
 
 		render() {
-			const tags = this.props.tags || '';
-      if(tags === '' || tags === '[]') return null;
+			const tags = this.props.tags || [];
+			if (tags.length === 0) return null;
 
-      const arrTags = tags.replace('[','').replace(']','').split(',');
-      if(arrTags.length === 0) return null;
+			const showTags = (tag) => {
+				app.helpers._windowHelper.setSelectedTagUrl(tag);
+				app.state.layout = 'tags';
+				app.instance.render('PostTagList.showTags()');
+			};
 
-			return (<div className="tag-list">
-				Tags: 
-				{arrTags.map(tag => {
-          return(<span key={tag} className="tag">
-            {tag}
-          </span>);
-        })}
+			return (<div className="post-tag-list">
+				{tags.map(tag => {
+					return (<semanticUIReact.Label key={tag} className="tag" as='a' onClick={() => showTags(tag)}>
+						<semanticUIReact.Icon name='tag' />
+						{tag}
+					</semanticUIReact.Label>);
+				})}
 			</div>);
 		}
 	}

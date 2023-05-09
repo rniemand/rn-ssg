@@ -21,6 +21,13 @@
       return decodeURI(matchValue);
     };
 
+    getSelectedUrlCategory = () => {
+      if (!app.config.getCategoryRegex.test(this.getUrlHash())) return '';
+      const match = app.config.getCategoryRegex.exec(this.getUrlHash());
+      const matchValue = match[app.config.getCategoryIndex || 0] || '';
+      return decodeURI(matchValue);
+    };
+
     setCustomPageUrl = (url) => {
       _window.location.hash = url;
     };
@@ -39,11 +46,20 @@
         .replace('{title}', encodeURI(page.slug));
     };
 
-    setSelectedTagUrl = (page, tag) => {
+    setSelectedTagUrl = (tag, page) => {
+      if (!page) page = app.globals.pageHelper.special.tags;
+
       _window.location.hash = app.config.pageTagUrlTemplate
         .replace('{id}', page.id)
         .replace('{title}', encodeURI(page.slug))
         .replace('{tag}', encodeURI(tag));
+    };
+
+    setSelectedCategoryUrl = (page, category) => {
+      _window.location.hash = app.config.pageTagUrlTemplate
+        .replace('{id}', page.id)
+        .replace('{title}', encodeURI(page.slug))
+        .replace('{tag}', encodeURI(category));
     };
 
     setPostsUrl = () => {

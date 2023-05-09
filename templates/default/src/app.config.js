@@ -16,6 +16,7 @@ window.RnSSG = window.RnSSG || {};
   app.components = {};
   app.enums = {};
   app.models = {};
+  app.globals = {};
   app.state = {
     layout: 'posts'
   };
@@ -41,6 +42,8 @@ window.RnSSG = window.RnSSG || {};
     pageUrlRegex: new RegExp('\\/page\\/(\\d{1,})\\/'),
     getTagRegex: new RegExp('\\/page\\/(\\d{1,})\\/[^\\/]+\\/(.*?)$'),
     getTagIndex: 2,
+    getCategoryRegex: new RegExp('\\/page\\/(\\d{1,})\\/[^\\/]+\\/(.*?)$'),
+    getCategoryIndex: 2,
     pageTagUrlTemplate: '/page/{id}/{title}/{tag}',
     logging: {
       enabled: true,

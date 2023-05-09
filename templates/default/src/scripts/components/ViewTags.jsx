@@ -13,8 +13,8 @@
       });
 
       const onTagClick = (tag) => {
-        app.helpers._windowHelper.setSelectedTagUrl(pageHelper.selectedPage, tag);
-        app.instance.render('Tags.onTagClick()');
+        app.helpers._windowHelper.setSelectedTagUrl(tag, pageHelper.selectedPage);
+        app.instance.render('ViewTags.onTagClick()');
       };
 
       const clearTagClick = () => {
@@ -37,10 +37,10 @@
       }
 
       return (<div className="post-tags">
-        {posts.length > 0 && (<div className="posts">
+        <div className="posts">
           <h2>Posts Tagged With ({selectedTag}) <semanticUIReact.Icon name='close' color='red' onClick={clearTagClick} /></h2>
           <app.components.PostList posts={posts} onPostSelected={this.props.onPostSelected} />
-        </div>)}
+        </div>
       </div>);
     }
   }

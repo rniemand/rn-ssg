@@ -10,6 +10,7 @@
       this.currentPageHtml = null;
       this.currentPageMetadata = null;
       this.pageLookup = {};
+      this.special = {};
     }
 
     loadPagesIndex = () => {
@@ -95,11 +96,16 @@
 
     _processPages = (pages) => {
       const processed = [];
+      this.special = {};
 
       for (const pageJson of pages) {
         const page = new app.models.Page(pageJson);
         processed.push(page);
         this.pageLookup[page.id] = page;
+
+        if (page.layout !== 'page') {
+          this.special[page.layout] = page;
+        }
       }
 
       this.allPages = processed;

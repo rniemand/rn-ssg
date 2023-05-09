@@ -122,12 +122,19 @@
 
     getFilteredPosts = (filter) => {
       const tagFilter = filter?.tag || '';
+      const catFilter = filter?.category || '';
       const tags = tagFilter.length > 0 ? [tagFilter] : (filter.tags || []);
+      const cats = catFilter.length > 0 ? [catFilter] : (filter.categories || []);
       const filterOnTag = tags.length > 0;
+      const filterOnCat = cats.length > 0;
 
       return this.allPosts.filter(post => {
         if (filterOnTag) {
           if (!this._containsTags(post, tags)) return false;
+        }
+
+        if (filterOnCat) {
+          if (!this._containsCategories(post, cats)) return false;
         }
 
         return true;
@@ -224,6 +231,15 @@
     _containsTags = (post, tags) => {
       for (let i = 0; i < tags.length; i++) {
         if (post.tags.indexOf(tags[i]) > -1) continue;
+        return false;
+      }
+
+      return true;
+    };
+
+    _containsCategories = (post, categories) => {
+      for (let i = 0; i < categories.length; i++) {
+        if (post.categories.indexOf(categories[i]) > -1) continue;
         return false;
       }
 

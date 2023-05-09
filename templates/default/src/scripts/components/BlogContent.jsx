@@ -14,10 +14,10 @@
       };
 
       switch (app.state.layout.toLowerCase()) {
-        case 'categories': return (<app.components.ViewCategories postHelper={postHelper} />);
         case 'page': return (<app.components.ViewPage pageHelper={pageHelper} />);
-        case 'tags': return (<app.components.ViewTags postHelper={postHelper} pageHelper={pageHelper} onPostSelected={onPostSelectedHandler} />);
         case 'post': return (<app.components.ViewPost postHelper={postHelper} />);
+        case 'categories': return (<app.components.ViewCategories postHelper={postHelper} pageHelper={pageHelper} onPostSelected={onPostSelectedHandler} />);
+        case 'tags': return (<app.components.ViewTags postHelper={postHelper} pageHelper={pageHelper} onPostSelected={onPostSelectedHandler} />);
         case 'posts': return (<app.components.ViewPostList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />);
         case 'archives': return (<app.components.ViewPostList postHelper={postHelper} onPostSelected={onPostSelectedHandler} />);
 
