@@ -48,17 +48,13 @@ Placeholder for now...
 
 - Fix post archive styling
 - Fix table of contents on active blog post
-- Rewrite documenation for CLI
 - Fix table styling
 - Fix image rendering logic (perhaps add a modal for more information)
-- Add category browser
-- Add tag browser
 - Add simple search to blog
 - Support for commenting on posts
 - Add new post scaffolder
 - Detect and load prism language files automatically
 - Add additional plugins for prism
-- Sort out ' quotes in post titles extracted from metadata
 - fix `shelll` in Installing MariaDB (MySQL) on Ubuntu
 - Promote layout from metadata to pages JSON file
 - Ability to list posts by a specific author

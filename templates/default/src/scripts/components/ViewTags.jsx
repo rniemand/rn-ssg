@@ -18,7 +18,9 @@
       };
 
       const clearTagClick = () => {
-        pageHelper.loadSelectedPage(pageHelper.selectedPage);
+        let page = pageHelper.selectedPage;
+        if (!page) page = app.globals.pageHelper.special.tags;
+        pageHelper.loadSelectedPage(page);
       };
 
       if (posts.length === 0) {
