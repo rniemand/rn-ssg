@@ -28,7 +28,7 @@
         {postHelper.nextPost && <button onClick={() => postHelper.loadSelectedPost(postHelper.nextPost)}>Next Post &gt;</button>}
         <app.components.PostHeader post={postHelper.selectedPost} metadata={postHelper.postMetadata} />
         <app.components.PostToc toc={postHelper.selectedPostToc} metadata={postHelper.postMetadata} />
-        <div className="content" dangerouslySetInnerHTML={{ __html: postHtml }}></div>
+        <div className="content" dangerouslySetInnerHTML={{ __html: postHtml.replace(/\{\: [^\s]+ \}/g, '') }}></div>
       </div>);
     }
   }
