@@ -6,15 +6,9 @@
 
     render() {
       const pageHelper = this.props.pageHelper;
-
-      if (!pageHelper.selectedPage) {
-        return (<div>
-          <h1>No Page Selected</h1>
-        </div>)
-      }
+      if (!pageHelper.selectedPage) return (<div><h1>No Page Selected</h1></div>);
 
       return (<div className="page">
-        <button onClick={pageHelper.clearSelectedPage}>Post list</button>
         <h1>{pageHelper.selectedPage.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: pageHelper.currentPageHtml }}></div>
       </div>);
