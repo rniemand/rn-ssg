@@ -24,7 +24,9 @@ class BlogPostListEntry
 
   [JsonProperty("author")]
   public string Author { get; set; } = string.Empty;
-  // todo: add support for author metadata
+
+  [JsonProperty("image")]
+  public string Image { get; set; } = string.Empty;
 
   [JsonProperty("id")]
   public int Id { get; set; } = 0;

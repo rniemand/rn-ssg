@@ -8,4 +8,5 @@ class BlogPostMetadata
   public string[] Tags { get; set; } = Array.Empty<string>();
   public bool TableOfContents { get; set; }
   public string Author { get; set; } = string.Empty;
+  public string Image { get; set; } = string.Empty;
 }

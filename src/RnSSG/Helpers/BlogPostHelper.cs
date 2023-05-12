@@ -73,7 +73,8 @@ class BlogPostHelper : IBlogPostHelper
         Tags = postFile.Metadata.Tags,
         Author = postFile.Metadata.Author,
         Id = postId++,
-        Categories = postFile.Metadata.Categories
+        Categories = postFile.Metadata.Categories,
+        Image = postFile.Metadata.Image,
       })
       .ToList();
   }
@@ -97,6 +98,7 @@ class BlogPostHelper : IBlogPostHelper
     mapped.Tags = metadata.GetStringArray("tags");
     mapped.TableOfContents = metadata.GetBoolValue("toc", false);
     mapped.Author = metadata.GetStringValue("author", config.DefaultAuthor);
+    mapped.Image = metadata.GetStringValue("image", config.BlogPostFallbackImage);
 
     return mapped;
   }

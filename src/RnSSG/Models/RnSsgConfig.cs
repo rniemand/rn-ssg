@@ -27,4 +27,7 @@ class RnSsgConfig
 
   [JsonProperty("defaultAuthor")]
   public string DefaultAuthor { get; set; } = string.Empty;
+
+  [JsonProperty("postFallbackImage")]
+  public string BlogPostFallbackImage { get; set; } = string.Empty;
 }
